@@ -7,12 +7,17 @@ import ElementUI from 'element-ui'
 import {initMenu} from './utils/utils'
 import './utils/filter_utils'
 
+import i18n from './lang' // Internationalization
+
 import 'element-ui/lib/theme-chalk/index.css'
 
 import 'normalize.css/normalize.css'
 import 'font-awesome/css/font-awesome.min.css'
 
 import {getRequest, getRequestUrl, postRequest, deleteRequest, putRequest} from './utils/request'
+
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css'// progress bar style
 
 Vue.config.productionTip = false
 
@@ -26,11 +31,12 @@ Vue.prototype.putRequest = putRequest
 
 /* 登录前拦截 **/
 router.beforeEach((to, from, next) => {
+  NProgress.start() // start progress bar
   if (to.name === 'Login') {
     next()
     return
   }
-  var name = store.state.user.name
+  var name = store.state.login.user.name
   if (name === '未登录') {
     if (to.meta.requireAuth || to.name == null) {
       next({path: '/', query: {redirect: to.path}})
@@ -43,11 +49,16 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: {App},
   template: '<App/>'
 })

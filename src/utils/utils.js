@@ -2,7 +2,7 @@ import {getRequest} from './request'
 // import {Message} from 'element-ui'
 
 export const initMenu = (router, store) => {
-  if (store.state.routes.length > 0) {
+  if (store.state.login.routes.length > 0) {
     return
   }
   getRequest('/menu.json').then(resp => {
