@@ -10,7 +10,7 @@ const login = {
     selectHeader (state, headerIndex) {
       state.headerIndex = headerIndex
       window.localStorage.setItem('headerIndex', headerIndex)
-      initMenu(router, store)
+      initMenu(router, store, 'selectHeader')
     },
     initIndex (state) {
       state.headerIndex = 1

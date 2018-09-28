@@ -2,7 +2,7 @@ import {getRequest} from './request'
 // import {Message} from 'element-ui'
 // import ErrorPage from '@/views/errorPage/404'
 
-export const initMenu = (router, store) => {
+export const initMenu = (router, store, type) => {
   // if (store.state.login.routes.length > 0) {
   //   // return
   //   store.state.login.routes = []
@@ -13,8 +13,9 @@ export const initMenu = (router, store) => {
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
       router.addRoutes(fmtRoutes)
       store.commit('initMenu', fmtRoutes)
-      console.info(router)
-      router.replace({path: fmtRoutes[0].children[0].path})
+      if (type === 'selectHeader') {
+        router.replace({path: fmtRoutes[0].children[0].path})
+      }
     }
   })
 }

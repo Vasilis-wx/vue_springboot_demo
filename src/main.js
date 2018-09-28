@@ -4,18 +4,19 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
 import {initMenu} from './utils/utils'
 import './utils/filter_utils'
 
 import i18n from './lang' // Internationalization
-
-import 'element-ui/lib/theme-chalk/index.css'
 
 import 'normalize.css/normalize.css'
 import 'font-awesome/css/font-awesome.min.css'
 
 import {getRequest, getRequestUrl, postRequest, deleteRequest, putRequest} from './utils/request'
 
+/* ********* 进度条 ************/
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 
