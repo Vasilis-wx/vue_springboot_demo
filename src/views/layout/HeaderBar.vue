@@ -1,6 +1,22 @@
 <template>
   <div style="display: flex;align-items: center;justify-content: space-between;height: 100%">
-    <span class="home_title">vue+springboot</span>
+    <div style="display: flex;align-items: center;justify-content: space-between;height: 100%">
+      <div style="width: 180px">
+        <span class="home_title">vue+springboot</span>
+      </div>
+      <el-menu
+        :default-active="$route.path"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+        background-color="#2C3C4D"
+        text-color="#fff"
+        router
+        active-text-color="#ffd04b">
+        <el-menu-item index="/home">系统管理</el-menu-item>
+        <el-menu-item index="4">订单管理</el-menu-item>
+      </el-menu>
+    </div>
     <div >
       <!--<el-badge style="margin-right: 30px">-->
       <!--<i class="fa fa-bell-o" style="cursor: pointer"></i>-->

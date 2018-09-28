@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import TagsView from './component/TagsView'
+import TagsView from '../component/TagsView'
 import HeaderBar from './HeaderBar'
 import SideBar from './SideBar'
 
@@ -62,8 +62,4 @@ export default {
     background-color: #545c64;
   }
 
-  .el-submenu .el-menu-item {
-    width: 180px;
-    min-width: 175px;
-  }
 </style>

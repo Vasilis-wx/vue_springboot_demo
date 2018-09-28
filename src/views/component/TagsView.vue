@@ -96,12 +96,13 @@ export default {
     },
     closeSelectedTag (view) {
       this.$store.dispatch('delView', view).then(({ visitedViews }) => {
+        debugger
         if (this.isActive(view)) {
           const latestView = visitedViews.slice(-1)[0]
           if (latestView) {
             this.$router.push(latestView)
           } else {
-            this.$router.push('/')
+            this.$router.push('/home')
           }
         }
       })
@@ -114,7 +115,7 @@ export default {
     },
     closeAllTags () {
       this.$store.dispatch('delAllViews')
-      this.$router.push('/')
+      this.$router.push('/home')
     },
     openMenu (tag, e) {
       this.visible = true

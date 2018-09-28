@@ -9,7 +9,7 @@
         <el-input v-model="loginForm.password" type="password" name="password" placeholder="请输入密码" auto-complete="on"></el-input>
       </el-form-item>
 
-      <el-checkbox class="login_remember" v-model="checked">记住密码</el-checkbox>
+      <!--<el-checkbox class="login_remember" v-model="checked">记住密码</el-checkbox>-->
 
       <el-form-item>
         <el-button type="primary" @click="handleLoginClick" style="width:100%;">登录</el-button>

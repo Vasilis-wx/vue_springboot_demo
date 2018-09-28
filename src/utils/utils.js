@@ -5,7 +5,7 @@ export const initMenu = (router, store) => {
   if (store.state.login.routes.length > 0) {
     return
   }
-  getRequest('/menu.json').then(resp => {
+  getRequest('/menu.json?23789').then(resp => {
     if (resp && resp.status === 200) {
       var fmtRoutes = formatRoutes(resp.data)
       router.addRoutes(fmtRoutes)
@@ -31,13 +31,16 @@ export const formatRoutes = (routes) => {
     let fmRouter = {
       path: path,
       component (resolve) {
+        console.info(component)
         if (component.startsWith('Home')) {
-          require(['../views/' + component + '.vue'], resolve)
+          require(['../views/layout/' + component + '.vue'], resolve)
         } else if (component.startsWith('Emp')) {
           require(['../views/emp/' + component + '.vue'], resolve)
         } else if (component.startsWith('Sal')) {
           require(['../views/salary/' + component + '.vue'], resolve)
         } else if (component.startsWith('Sys')) {
+          require(['../views/system/' + component + '.vue'], resolve)
+        } else if (component.startsWith('index')) {
           require(['../views/system/' + component + '.vue'], resolve)
         }
       },

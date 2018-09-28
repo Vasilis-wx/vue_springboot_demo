@@ -7,7 +7,8 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       router
-      :default-active="$route.path">
+      :default-active="$route.path"
+    >
       <template v-for="(item,index) in this.routes" v-if="!item.hidden">
         <el-submenu :key="index" :index="index+''">
           <template slot="title">
@@ -37,5 +38,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .el-submenu .el-menu-item {
+    width: 175px;
+    min-width: 170px;
+  }
 </style>

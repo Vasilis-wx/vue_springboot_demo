@@ -19,6 +19,8 @@ import {getRequest, getRequestUrl, postRequest, deleteRequest, putRequest} from 
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 
+NProgress.configure({ showSpinner: false })// NProgress Configuration
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
@@ -37,7 +39,7 @@ router.beforeEach((to, from, next) => {
     return
   }
   var name = store.state.login.user.name
-  if (name === '未登录') {
+  if (!name || name === '未登录') {
     if (to.meta.requireAuth || to.name == null) {
       next({path: '/', query: {redirect: to.path}})
     } else {
@@ -47,6 +49,7 @@ router.beforeEach((to, from, next) => {
     initMenu(router, store)
     next()
   }
+  NProgress.done() // finish progress bar
 })
 
 router.afterEach(() => {

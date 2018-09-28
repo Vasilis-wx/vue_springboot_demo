@@ -9,12 +9,12 @@ const login = {
   },
   mutations: {
     login (state, user) {
-      console.info(user)
       state.user = user
       window.localStorage.setItem('user', JSON.stringify(user))
     },
     logout (state) {
       window.localStorage.removeItem('user')
+      state.user = {}
       state.routes = []
     },
     initMenu (state, menus) {
