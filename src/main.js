@@ -46,8 +46,16 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    initMenu(router, store, '', true)
-    initAllMenu(router, store, '', true)
+    if (to.meta.index) {
+      store.commit('selectHeader', {
+        headerIndex: to.meta.index,
+        type: 'selectTagView'
+      })
+    } else {
+      initMenu(router, store, '', true)
+    }
+    // 初始化所有路由
+    initAllMenu(router, store)
     next()
   }
   NProgress.done() // finish progress bar

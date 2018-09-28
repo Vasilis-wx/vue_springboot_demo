@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import {initMenu, initAllMenu} from '@/utils/utils'
 export default {
   name: 'Login',
   data () {
@@ -59,7 +60,9 @@ export default {
                 _this.$store.commit('login', data.data)
                 _this.$store.commit('initIndex')
                 // var path = _this.$route.query.redirect
-                _this.$router.replace({path: '/home'})
+                // _this.$router.replace({path: '/home'})
+                initMenu(_this.$router, _this.$store, 'selectHeader', true)
+                initAllMenu(_this.$router, _this.$store)
               }
             })
         }

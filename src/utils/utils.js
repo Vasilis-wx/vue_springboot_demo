@@ -3,16 +3,18 @@ import { getRequest } from './request'
 // import ErrorPage from '@/views/errorPage/404'
 import notFoundRouterMap from '@/router/notFoundRouterMap'
 
+/* ************ 加载所选headBar的路由存入store *******************/
+// change时候切换了headBar
 export const initMenu = (router, store, type, change) => {
   if (store.state.login.routes.length > 0 && change) {
     return
-    // store.state.login.routes = []
   }
-  getRequest('/menu.json').then(resp => {
+  getRequest('/menu.json?3333ggs13zdfs33344').then(resp => {
     if (resp && resp.status === 200) {
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
       store.commit('initMenu', fmtRoutes)
+      // 点击headBar时打开对应首页
       if (type === 'selectHeader') {
         router.replace({ path: fmtRoutes[0].children[0].path })
       }
@@ -20,7 +22,8 @@ export const initMenu = (router, store, type, change) => {
   })
 }
 
-export const initAllMenu = (router, store, type) => {
+/* ************ 加载全部路由放入路由器 *************/
+export const initAllMenu = (router, store) => {
   if (store.state.login.routes.length > 0) {
     return
   }
@@ -59,8 +62,6 @@ export const formatRoutes = (routes) => {
         } else if (component.startsWith('Sal')) {
           require(['../views/salary/' + component + '.vue'], resolve)
         } else if (component.startsWith('Sys')) {
-          require(['../views/system/' + component + '.vue'], resolve)
-        } else if (component.startsWith('index')) {
           require(['../views/system/' + component + '.vue'], resolve)
         }
       },
