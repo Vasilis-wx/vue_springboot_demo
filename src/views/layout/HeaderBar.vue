@@ -76,7 +76,6 @@ export default {
       this.$store.commit('selectHeader', {
         headerIndex: index
       })
-      // initMenu(router, store)
     }
   }
 }
