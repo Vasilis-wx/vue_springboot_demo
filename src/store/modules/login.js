@@ -1,5 +1,3 @@
-import router from '@/router'
-
 const login = {
   state: {
     user: {
@@ -18,6 +16,7 @@ const login = {
       window.localStorage.removeItem('user')
       state.user = {}
       state.routes = []
+      location.reload()
     },
     initMenu (state, menus) {
       state.routes = menus
