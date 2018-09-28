@@ -5,9 +5,11 @@ export const initMenu = (router, store) => {
   if (store.state.login.routes.length > 0) {
     return
   }
-  getRequest('/menu.json?23789').then(resp => {
+  getRequest('/menu.json?237839').then(resp => {
     if (resp && resp.status === 200) {
-      var fmtRoutes = formatRoutes(resp.data)
+      debugger
+      var headerIndex = store.state.headBar.headerIndex
+      var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
       router.addRoutes(fmtRoutes)
       store.commit('initMenu', fmtRoutes)
     }

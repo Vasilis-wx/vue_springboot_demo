@@ -5,16 +5,15 @@
         <span class="home_title">vue+springboot</span>
       </div>
       <el-menu
-        :default-active="$route.path"
+        default-active="1"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
         background-color="#2C3C4D"
         text-color="#fff"
-        router
         active-text-color="#ffd04b">
-        <el-menu-item index="/home">系统管理</el-menu-item>
-        <el-menu-item index="4">订单管理</el-menu-item>
+        <el-menu-item index="1">系统管理</el-menu-item>
+        <el-menu-item index="2">订单管理</el-menu-item>
       </el-menu>
     </div>
     <div >
@@ -67,6 +66,10 @@ export default {
           })
         })
       }
+    },
+    handleSelect () {
+      this.$store.commit('selectHeader')
+      // initMenu(router, store)
     }
   }
 }
