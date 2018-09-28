@@ -67,8 +67,8 @@ export default {
         })
       }
     },
-    handleSelect () {
-      this.$store.commit('selectHeader')
+    handleSelect (index) {
+      this.$store.commit('selectHeader', index)
       // initMenu(router, store)
     }
   }

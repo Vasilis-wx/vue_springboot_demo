@@ -11,6 +11,7 @@ const login = {
     login (state, user) {
       state.user = user
       window.localStorage.setItem('user', JSON.stringify(user))
+      window.localStorage.setItem('headerIndex', 1)
     },
     logout (state) {
       window.localStorage.removeItem('user')

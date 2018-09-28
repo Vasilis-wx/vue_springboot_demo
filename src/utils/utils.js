@@ -3,11 +3,12 @@ import {getRequest} from './request'
 
 export const initMenu = (router, store) => {
   if (store.state.login.routes.length > 0) {
-    return
+    // return
+    store.state.login.routes = []
   }
-  getRequest('/menu.json?237839').then(resp => {
+  getRequest('/menu.json?2378333339').then(resp => {
     if (resp && resp.status === 200) {
-      debugger
+      console.info(store.state.headBar)
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
       router.addRoutes(fmtRoutes)
