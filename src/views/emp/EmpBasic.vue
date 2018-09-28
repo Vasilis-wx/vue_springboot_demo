@@ -4,113 +4,63 @@
       <el-header style="padding: 0px;display:flex;justify-content:space-between;align-items: center">
         <div style="display: inline">
           <!--<el-input-->
-            <!--placeholder="通过员工名搜索员工,记得回车哦..."-->
-            <!--clearable-->
-            <!--style="width: 300px;margin: 0px;padding: 0px;"-->
-            <!--size="mini"-->
-            <!--prefix-icon="el-icon-search"-->
-            <!--v-model="keywords">-->
+          <!--placeholder="通过员工名搜索员工,记得回车哦..."-->
+          <!--clearable-->
+          <!--style="width: 300px;margin: 0px;padding: 0px;"-->
+          <!--size="mini"-->
+          <!--prefix-icon="el-icon-search"-->
+          <!--v-model="keywords">-->
           <!--</el-input>-->
           <!--<el-button type="primary" size="mini" style="margin-left: 5px" icon="el-icon-search">搜索-->
           <!--</el-button>-->
           <!--<el-button slot="reference" type="primary" size="mini" style="margin-left: 5px"><i-->
-            <!--class="fa fa-lg"-->
-            <!--style="margin-right: 5px"></i>高级搜索-->
+          <!--class="fa fa-lg"-->
+          <!--style="margin-right: 5px"></i>高级搜索-->
           <!--</el-button>-->
         </div>
         <div style="margin-left: 5px;margin-right: 20px;display: inline">
           <!--<el-upload-->
-            <!--:show-file-list="false"-->
-            <!--accept="application/vnd.ms-excel"-->
-            <!--action="/employee/basic/importEmp"-->
-            <!--style="display: inline">-->
-            <!--<el-button size="mini" type="success" ><i class="fa fa-lg fa-level-up" style="margin-right: 5px"></i>导入数据-->
-            <!--</el-button>-->
+          <!--:show-file-list="false"-->
+          <!--accept="application/vnd.ms-excel"-->
+          <!--action="/employee/basic/importEmp"-->
+          <!--style="display: inline">-->
+          <!--<el-button size="mini" type="success" ><i class="fa fa-lg fa-level-up" style="margin-right: 5px"></i>导入数据-->
+          <!--</el-button>-->
           <!--</el-upload>-->
           <!--<el-button type="success" size="mini" ><i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据-->
           <!--</el-button>-->
-          <el-button type="primary" size="mini" icon="el-icon-plus" style=""
-                     @click="showAddEmpView">
+          <el-button type="primary" size="mini" icon="el-icon-plus" style="" @click="showAddEmpView">
             添加员工
           </el-button>
         </div>
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
-          <el-table
-            :data="emps"
-            v-loading="tableLoading"
-            border
-            stripe
-            @selection-change="handleSelectionChange"
-            size="mini"
-            style="width: 100%">
-            <el-table-column
-              type="selection"
-              align="left"
-              width="30">
+          <el-table :data="emps" v-loading="tableLoading" border stripe @selection-change="handleSelectionChange" size="mini" style="width: 100%" height="650px">
+            <el-table-column type="selection" align="left" width="30">
             </el-table-column>
-            <el-table-column
-              type="index"
-              :index="indexMethod"
-              fixed
-              align="center"
-              label="序号"
-              width="80">
+            <el-table-column type="index" :index="indexMethod" fixed align="center" label="序号" width="80">
             </el-table-column>
-            <el-table-column
-              prop="name"
-              fixed
-              align="center"
-              label="姓名"
-              width="150">
+            <el-table-column prop="name" fixed align="center" label="姓名" width="150">
             </el-table-column>
-            <el-table-column
-              prop="username"
-              align="center"
-              label="登录账号"
-              width="150">
+            <el-table-column prop="username" align="center" label="登录账号" width="150">
             </el-table-column>
-            <el-table-column
-              prop="sex"
-              label="性别"
-              align="center"
-              :formatter="formatterSex"
-              width="80">
+            <el-table-column prop="sex" label="性别" align="center" :formatter="formatterSex" width="80">
             </el-table-column>
-            <el-table-column
-              width="150"
-              align="center"
-              label="出生日期">
+            <el-table-column width="150" align="center" label="出生日期">
               <!--<template slot-scope="scope">{{formatDateTime(scope.row.birthday, 'yyyy-MM-dd HH:mm:ss')}}</template>-->
               <template slot-scope="scope">{{scope.row.birthday | formatDate}}</template>
             </el-table-column>
-            <el-table-column
-              prop="userface"
-              label="头像"
-              align="center"
-              width="150">
+            <el-table-column prop="userface" label="头像" align="center" width="150">
               <template slot-scope="scope">
                 <img :src="scope.row.userface" width="60" height="60"/>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="email"
-              align="center"
-              label="邮箱"
-              width="170">
+            <el-table-column prop="email" align="center" label="邮箱" width="170">
             </el-table-column>
-            <el-table-column
-              prop="phone"
-              align="center"
-              label="联系号码"
-              width="100">
+            <el-table-column prop="phone" align="center" label="联系号码" width="100">
             </el-table-column>
-            <el-table-column
-              prop="address"
-              label="地址"
-              align="center"
-              width="300">
+            <el-table-column prop="address" label="地址" align="center" width="300">
               <template slot-scope="scope">
                 <el-popover v-if="scope.row.address && scope.row.address.length>10" trigger="hover" placement="top">
                   <p style="max-width: 300px"> {{ scope.row.address }}</p>
@@ -118,77 +68,46 @@
                     <el-tag size="medium">{{ scope.row.address.substring(0,10) }}</el-tag>
                   </div>
                 </el-popover>
-                <p v-else >{{ scope.row.address }}</p>
+                <p v-else>{{ scope.row.address }}</p>
               </template>
             </el-table-column>
-            <el-table-column
-              fixed="right"
-              label="操作"
-              align="center"
-              width="195">
+            <el-table-column fixed="right" label="操作" align="center" width="195">
               <template slot-scope="scope">
                 <!--<el-button style="padding: 3px 4px 3px 4px;margin: 2px"-->
-                           <!--size="medium">编辑-->
+                <!--size="medium">编辑-->
                 <!--</el-button>-->
                 <el-button size="mini" @click="showEditEmpView(scope.row)">编辑
                 </el-button>
-                <el-button
-                  type="danger"
-                  size="mini"
-                  @click="deleteEmp(scope.row)"
-                >删除
+                <el-button type="danger" size="mini" @click="deleteEmp(scope.row)">删除
                 </el-button>
               </template>
             </el-table-column>
           </el-table>
           <div style="display: flex;justify-content: space-between;margin: 2px">
-            <el-button type="danger" size="mini"
-                       v-if="emps.length>0"
-                       :disabled="multipleSelection.length === 0"
-                       @click="deleteManyEmps"
-            >批量删除
+            <el-button type="danger" size="mini" v-if="emps.length>0" :disabled="multipleSelection.length === 0" @click="deleteManyEmps">批量删除
             </el-button>
-            <el-pagination
-              background
-              :page-size="pageSize"
-              :current-page="currentPage"
-              layout="prev, pager, next"
-              @current-change="currentChange"
-              :total="totalCount">
+            <el-pagination @size-change="handleSizeChange" @current-change="currentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
             </el-pagination>
           </div>
         </div>
       </el-main>
     </el-container>
 
-    <el-form :model="emp"
-             :rules="rules"
-             ref="addEmpForm"
-             style="margin: 0px;padding: 0px;"
-             :label-position="labelPosition"
-             label-width="100px">
+    <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;" :label-position="labelPosition" label-width="100px">
       <div style="text-align: left">
-        <el-dialog
-          :title="dialogTitle"
-          style="padding: 0px;"
-          :visible.sync="dialogVisible"
-          :close-on-click-modal="false"
-          width="50%"
-        >
+        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="50%">
           <el-row>
             <el-col :span="8">
               <div>
                 <el-form-item label="姓名:" prop="name">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.name" size="mini" style="width: 150px"
-                            placeholder="请输入员工姓名"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.name" size="mini" style="width: 150px" placeholder="请输入员工姓名"></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div>
                 <el-form-item label="登录账号:" prop="username">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.username" size="mini" style="width: 150px"
-                            placeholder="请输入员工登录账号"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.username" size="mini" style="width: 150px" placeholder="请输入员工登录账号"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -207,13 +126,7 @@
             <el-col :span="8">
               <div>
                 <el-form-item label="出生日期:" prop="birthday">
-                  <el-date-picker
-                    v-model="emp.birthday"
-                    size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="出生日期">
+                  <el-date-picker v-model="emp.birthday" size="mini" value-format="yyyy-MM-dd HH:mm:ss" style="width: 150px" type="date" placeholder="出生日期">
                   </el-date-picker>
                 </el-form-item>
               </div>
@@ -221,16 +134,14 @@
             <el-col :span="8">
               <div>
                 <el-form-item label="地址:" prop="address">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.address" size="mini" style="width: 150px"
-                            placeholder="请输入地址"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.address" size="mini" style="width: 150px" placeholder="请输入地址"></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div>
                 <el-form-item label="头像:" prop="userface">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" style="width: 150px"
-                            placeholder="请输入头像图片网址"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" style="width: 150px" placeholder="请输入头像图片网址"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -239,16 +150,14 @@
             <el-col :span="8">
               <div>
                 <el-form-item label="电子邮箱:" prop="email">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.email" size="mini" style="width: 150px"
-                            placeholder="请输入电子邮箱"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.email" size="mini" style="width: 150px" placeholder="请输入电子邮箱"></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div>
                 <el-form-item label="联系方式:" prop="phone">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.phone" size="mini" style="width: 150px"
-                            placeholder="请输入联系方式"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.phone" size="mini" style="width: 150px" placeholder="请输入联系方式"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -309,17 +218,17 @@ export default {
         phone: ''
       },
       rules: {
-        name: [{required: true, message: '必填:姓名', trigger: 'blur'}],
-        username: [{required: true, message: '必填:登录账号', trigger: 'blur'}],
-        sex: [{required: true, message: '必填:性别', trigger: 'blur'}],
-        birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
-        email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
+        name: [{ required: true, message: '必填:姓名', trigger: 'blur' }],
+        username: [{ required: true, message: '必填:登录账号', trigger: 'blur' }],
+        sex: [{ required: true, message: '必填:性别', trigger: 'blur' }],
+        birthday: [{ required: true, message: '必填:出生日期', trigger: 'blur' }],
+        email: [{ required: true, message: '必填:电子邮箱', trigger: 'blur' }, {
           type: 'email',
           message: '邮箱格式不正确',
           trigger: 'blur'
         }],
-        phone: [{required: true, message: '必填:联系方式', trigger: 'blur'}],
-        address: [{required: true, message: '必填:联系地址', trigger: 'blur'}]
+        phone: [{ required: true, message: '必填:联系方式', trigger: 'blur' }],
+        address: [{ required: true, message: '必填:联系地址', trigger: 'blur' }]
       }
     }
   },
@@ -404,7 +313,7 @@ export default {
         _this.tableLoading = false
         if (resp && resp.status === 200) {
           var data = resp.data
-          _this.$message({type: data.status, message: data.msg})
+          _this.$message({ type: data.status, message: data.msg })
           _this.loadEmps()
         }
       })
@@ -417,6 +326,10 @@ export default {
     // searchEmp () {
     //   this.loadEmps()
     // },
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.loadEmps()
+    },
     currentChange (currentChange) {
       this.currentPage = currentChange
       this.loadEmps()
@@ -448,7 +361,7 @@ export default {
               _this.tableLoading = false
               if (resp && resp.status === 200) {
                 var data = resp.data
-                _this.$message({type: data.status, message: data.msg})
+                _this.$message({ type: data.status, message: data.msg })
                 _this.dialogVisible = false
                 _this.emptyEmpData()
                 _this.loadEmps()
@@ -524,21 +437,22 @@ export default {
 }
 </script>
 <style>
-  .el-dialog__body {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
+.el-dialog__body {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
 
-  .slide-fade-enter-active {
-    transition: all .8s ease;
-  }
+.slide-fade-enter-active {
+  transition: all 0.8s ease;
+}
 
-  .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
 
-  .slide-fade-enter, .slide-fade-leave-to {
-    transform: translateX(10px);
-    opacity: 0;
-  }
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>
