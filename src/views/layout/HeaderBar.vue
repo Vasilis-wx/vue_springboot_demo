@@ -62,6 +62,8 @@ export default {
           _this.getRequest('/login/logout')
           _this.$store.commit('logout')
           _this.$router.replace({path: '/'})
+
+          _this.$router.options.routes = null
         }).catch(() => {
           _this.$message({
             type: 'info',

@@ -12,14 +12,25 @@ export const initMenu = (router, store, type, change) => {
     if (resp && resp.status === 200) {
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
-      router.addRoutes(fmtRoutes)
       store.commit('initMenu', fmtRoutes)
       if (type === 'selectHeader') {
         router.replace({ path: fmtRoutes[0].children[0].path })
       }
-      router.addRoutes(notFoundRouterMap)
+    }
+  })
+}
 
-      console.info(router)
+export const initAllMenu = (router, store, type) => {
+  if (store.state.login.routes.length > 0) {
+    return
+  }
+  getRequest('/menu.json?33').then(resp => {
+    if (resp && resp.status === 200) {
+      for (let i = 0; i < resp.data.length; i++) {
+        var fmtRoutes = formatRoutes(resp.data[i].routers)
+        router.addRoutes(fmtRoutes)
+      }
+      router.addRoutes(notFoundRouterMap)
     }
   })
 }

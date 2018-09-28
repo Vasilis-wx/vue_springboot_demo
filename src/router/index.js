@@ -14,7 +14,7 @@ export default new Router({
       component: Login
     }, {
       path: '/home',
-      name: '主页',
+      name: '主页444',
       component: Home,
       hidden: true,
       meta: {

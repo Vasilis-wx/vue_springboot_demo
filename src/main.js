@@ -6,7 +6,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import {initMenu} from './utils/utils'
+import {initMenu, initAllMenu} from './utils/utils'
 import './utils/filter_utils'
 
 import i18n from './lang' // Internationalization
@@ -47,6 +47,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     initMenu(router, store, '', true)
+    initAllMenu(router, store, '', true)
     next()
   }
   NProgress.done() // finish progress bar
