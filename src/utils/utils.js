@@ -1,23 +1,25 @@
-import {getRequest} from './request'
+import { getRequest } from './request'
 // import {Message} from 'element-ui'
 // import ErrorPage from '@/views/errorPage/404'
 import notFoundRouterMap from '@/router/notFoundRouterMap'
 
-export const initMenu = (router, store, type) => {
-  // if (store.state.login.routes.length > 0) {
-  //   // return
-  //   store.state.login.routes = []
-  // }
-  getRequest('/menu.json?23783335339').then(resp => {
+export const initMenu = (router, store, type, change) => {
+  if (store.state.login.routes.length > 0 && change) {
+    return
+    // store.state.login.routes = []
+  }
+  getRequest('/menu.json').then(resp => {
     if (resp && resp.status === 200) {
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
       router.addRoutes(fmtRoutes)
       store.commit('initMenu', fmtRoutes)
       if (type === 'selectHeader') {
-        router.replace({path: fmtRoutes[0].children[0].path})
+        router.replace({ path: fmtRoutes[0].children[0].path })
       }
       router.addRoutes(notFoundRouterMap)
+
+      console.info(router)
     }
   })
 }

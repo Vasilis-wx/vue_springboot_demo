@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    initMenu(router, store)
+    initMenu(router, store, '', true)
     next()
   }
   NProgress.done() // finish progress bar

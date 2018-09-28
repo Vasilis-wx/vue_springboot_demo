@@ -8,9 +8,11 @@ const login = {
   },
   mutations: {
     selectHeader (state, headerIndex) {
+      const change = headerIndex === state.headerIndex
+
       state.headerIndex = headerIndex
       window.localStorage.setItem('headerIndex', headerIndex)
-      initMenu(router, store, 'selectHeader')
+      initMenu(router, store, 'selectHeader', change)
     },
     initIndex (state) {
       state.headerIndex = 1
