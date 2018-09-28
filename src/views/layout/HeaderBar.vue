@@ -5,7 +5,7 @@
         <span class="home_title">vue+springboot</span>
       </div>
       <el-menu
-        default-active="1"
+        :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
@@ -42,6 +42,9 @@ export default {
   computed: {
     user () {
       return this.$store.state.login.user
+    },
+    activeIndex () {
+      return this.$store.state.headBar.headerIndex
     }
   },
   methods: {

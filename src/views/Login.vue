@@ -57,6 +57,7 @@ export default {
               if (res && res.status === 200) {
                 var data = res.data
                 _this.$store.commit('login', data.data)
+                _this.$store.commit('initIndex')
                 // var path = _this.$route.query.redirect
                 _this.$router.replace({path: '/home'})
               }

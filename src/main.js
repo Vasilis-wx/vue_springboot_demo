@@ -33,6 +33,7 @@ Vue.prototype.putRequest = putRequest
 
 /* 登录前拦截 **/
 router.beforeEach((to, from, next) => {
+  console.info(to.path)
   NProgress.start() // start progress bar
   if (to.name === 'Login') {
     next()
