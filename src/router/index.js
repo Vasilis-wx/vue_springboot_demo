@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
 import Home from '@/views/layout/Home'
-import ErrorPage from '@/views/errorPage/404'
 
 Vue.use(Router)
 
@@ -16,15 +15,6 @@ export default new Router({
       path: '/home',
       name: '主页',
       component: Home,
-      hidden: true,
-      meta: {
-        requireAuth: true
-      }
-    },
-    {
-      path: '*',
-      name: '404',
-      component: ErrorPage,
       hidden: true,
       meta: {
         requireAuth: true

@@ -16,7 +16,6 @@ import 'font-awesome/css/font-awesome.min.css'
 
 import {getRequest, getRequestUrl, postRequest, deleteRequest, putRequest} from './utils/request'
 
-/* ********* 进度条 ************/
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 

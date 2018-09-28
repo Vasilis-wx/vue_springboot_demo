@@ -1,6 +1,7 @@
 import {getRequest} from './request'
 // import {Message} from 'element-ui'
 // import ErrorPage from '@/views/errorPage/404'
+import notFoundRouterMap from '@/router/notFoundRouterMap'
 
 export const initMenu = (router, store, type) => {
   // if (store.state.login.routes.length > 0) {
@@ -16,6 +17,7 @@ export const initMenu = (router, store, type) => {
       if (type === 'selectHeader') {
         router.replace({path: fmtRoutes[0].children[0].path})
       }
+      router.addRoutes(notFoundRouterMap)
     }
   })
 }
