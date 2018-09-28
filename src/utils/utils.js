@@ -9,22 +9,12 @@ export const initMenu = (router, store) => {
   // }
   getRequest('/menu.json?23783335339').then(resp => {
     if (resp && resp.status === 200) {
-      console.info(store.state.headBar.headerIndex)
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
-      // fmtRoutes.push({
-      //   path: '*',
-      //   name: '404',
-      //   component: ErrorPage,
-      //   hidden: true,
-      //   meta: {
-      //     requireAuth: true
-      //   }
-      // })
       router.addRoutes(fmtRoutes)
-      console.info(fmtRoutes)
-      console.info(router)
       store.commit('initMenu', fmtRoutes)
+      console.info(router)
+      router.replace({path: fmtRoutes[0].children[0].path})
     }
   })
 }

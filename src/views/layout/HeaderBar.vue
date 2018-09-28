@@ -44,7 +44,7 @@ export default {
       return this.$store.state.login.user
     },
     activeIndex () {
-      return this.$store.state.headBar.headerIndex
+      return this.$store.state.headBar.headerIndex + ''
     }
   },
   methods: {
