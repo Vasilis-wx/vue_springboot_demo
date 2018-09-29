@@ -37,15 +37,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'HeaderBar',
   computed: {
-    user () {
-      return this.$store.state.login.user
-    },
-    activeIndex () {
-      return this.$store.state.headBar.headerIndex + ''
-    }
+    ...mapGetters([
+      'user',
+      'activeIndex'
+    ])
   },
   methods: {
     handleCommand (cmd) {
@@ -98,5 +97,4 @@ export default {
     width: 180px;
     min-width: 175px;
   }
-
 </style>

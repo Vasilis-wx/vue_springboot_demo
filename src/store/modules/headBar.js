@@ -8,7 +8,6 @@ const login = {
   },
   mutations: {
     selectHeader (state, {headerIndex = '', type = 'selectHeader'} = {}) {
-      debugger
       const change = headerIndex === state.headerIndex
       state.headerIndex = headerIndex
       window.localStorage.setItem('headerIndex', headerIndex)
