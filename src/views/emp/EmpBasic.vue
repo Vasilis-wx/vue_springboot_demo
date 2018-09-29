@@ -95,7 +95,7 @@
 
     <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;" :label-position="labelPosition" label-width="100px">
       <div style="text-align: left">
-        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="50%">
+        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="50%" v-dialogDrag>
           <el-row>
             <el-col :span="8">
               <div>

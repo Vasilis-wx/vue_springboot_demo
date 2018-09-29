@@ -18,6 +18,7 @@ import {getRequest, getRequestUrl, postRequest, deleteRequest, putRequest} from 
 
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
+import '@/utils/directive'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
