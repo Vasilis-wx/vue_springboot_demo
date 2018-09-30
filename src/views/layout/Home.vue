@@ -69,7 +69,7 @@ export default {
     width: 100%;
   }
   .home-header {
-    /*background-color: #2C3C4D;*/
+    background-color: #2C3C4D;
     color: #333;
     padding: 0px;
   }

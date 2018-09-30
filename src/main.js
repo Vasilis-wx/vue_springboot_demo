@@ -21,6 +21,9 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import '@/utils/directive'
 
+import Icon from 'vue2-svg-icon/Icon.vue'
+Vue.component('icon', Icon)
+
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
 Vue.config.productionTip = false

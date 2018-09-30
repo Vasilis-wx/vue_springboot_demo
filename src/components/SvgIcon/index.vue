@@ -1,7 +1,11 @@
 <template>
-  <svg :class="svgClass" aria-hidden="true">
-    <use :xlink:href="iconName"/>
-  </svg>
+  <!--<div>-->
+    <!--<svg :class="svgClass" aria-hidden="true">-->
+      <!--<use :xlink:href="iconName"/>-->
+    <!--</svg>-->
+    <!--<span>{{svgClass}} {{iconName}}</span>-->
+  <!--</div>-->
+  <icon name="language"  class="myIcon"></icon>
 </template>
 
 <script>
@@ -33,11 +37,12 @@ export default {
 </script>
 
 <style scoped>
-.svg-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
+.myIcon {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.7em;
   fill: currentColor;
+  cursor:pointer;
   overflow: hidden;
 }
 </style>
