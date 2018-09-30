@@ -12,26 +12,30 @@
         background-color="#2C3C4D"
         text-color="#fff"
         active-text-color="#ffd04b">
-        <el-menu-item index="1">系统管理</el-menu-item>
-        <el-menu-item index="2">订单管理</el-menu-item>
+
+        <!--头部menu-->
+        <template v-for="(item,index) in headMenu">
+          <el-menu-item :index="item.index+''" :key="index"> {{getRouterTitle(item.title)}}</el-menu-item>
+        </template>
+
       </el-menu>
     </div>
     <div >
-      <el-badge style="margin-right: 30px">
-      <i class="fa fa-bell-o" style="cursor: pointer"></i>
-      </el-badge>
+      <!--语言选择-->
       <lang-select class="international right-menu-item"/>
 
+      <!--用户管理-->
       <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
               {{user.name}}
               <i><img v-if="user.userface!==''" :src="user.userface"
                       style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
+        <!--下拉菜单-->
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>{{ $t('dropdownMenu.personal') }}</el-dropdown-item>
-          <el-dropdown-item>{{ $t('dropdownMenu.setting') }}</el-dropdown-item>
-          <el-dropdown-item command="logout" divided>{{ $t('dropdownMenu.sign_out') }}</el-dropdown-item>
+          <el-dropdown-item>{{ $t('dropDownMenu.personal') }}</el-dropdown-item>
+          <el-dropdown-item>{{ $t('dropDownMenu.setting') }}</el-dropdown-item>
+          <el-dropdown-item command="logout" divided>{{ $t('dropDownMenu.sign_out') }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -40,6 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { generateTitle } from '@/utils/i18n'
 import LangSelect from '@/components/LangSelect'
 
 export default {
@@ -50,10 +55,17 @@ export default {
   computed: {
     ...mapGetters([
       'user',
-      'activeIndex'
+      'activeIndex',
+      'headMenu'
     ])
   },
+  mounted: function () {
+  },
   methods: {
+    getRouterTitle (title) {
+      let _this = this
+      return generateTitle(title, _this)
+    },
     handleCommand (cmd) {
       var _this = this
       /* ***************** 注销 ************************/

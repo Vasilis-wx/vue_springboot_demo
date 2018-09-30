@@ -1,5 +1,7 @@
 export default {
   route: {
+    orderManage: 'OrderManage',
+    systemManage: 'SystemManage',
     dashboard: 'Dashboard',
     introduction: 'Introduction',
     documentation: 'Documentation',
@@ -152,7 +154,7 @@ export default {
     closeOthers: 'Close Others',
     closeAll: 'Close All'
   },
-  dropdownMenu: {
+  dropDownMenu: {
     personal: 'Personal',
     setting: 'Setting',
     sign_out: 'Sign out'
