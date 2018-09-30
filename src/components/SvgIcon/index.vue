@@ -1,36 +1,15 @@
 <template>
-  <!--<div>-->
-    <!--<svg :class="svgClass" aria-hidden="true">-->
-      <!--<use :xlink:href="iconName"/>-->
-    <!--</svg>-->
-    <!--<span>{{svgClass}} {{iconName}}</span>-->
-  <!--</div>-->
-  <icon name="language"  class="myIcon"></icon>
+  <icon :name="iconClass"  class="myIcon"></icon>
 </template>
 
 <script>
 export default {
   name: 'SvgIcon',
   props: {
+    // 图标文件名
     iconClass: {
       type: String,
       required: true
-    },
-    className: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    iconName () {
-      return `#icon-${this.iconClass}`
-    },
-    svgClass () {
-      if (this.className) {
-        return 'svg-icon ' + this.className
-      } else {
-        return 'svg-icon'
-      }
     }
   }
 }
@@ -42,7 +21,7 @@ export default {
   height: 1.5em;
   margin-right: 0.7em;
   fill: currentColor;
-  cursor:pointer;
+  cursor:pointer; //手指样式
   overflow: hidden;
 }
 </style>

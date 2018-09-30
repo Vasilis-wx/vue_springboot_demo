@@ -151,5 +151,10 @@ export default {
     close: 'Close',
     closeOthers: 'Close Others',
     closeAll: 'Close All'
+  },
+  dropdownMenu: {
+    personal: 'Personal',
+    setting: 'Setting',
+    sign_out: 'Sign out'
   }
 }

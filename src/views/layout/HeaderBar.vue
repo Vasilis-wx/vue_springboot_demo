@@ -17,9 +17,9 @@
       </el-menu>
     </div>
     <div >
-      <!--<el-badge style="margin-right: 30px">-->
-      <!--<i class="fa fa-bell-o" style="cursor: pointer"></i>-->
-      <!--</el-badge>-->
+      <el-badge style="margin-right: 30px">
+      <i class="fa fa-bell-o" style="cursor: pointer"></i>
+      </el-badge>
       <lang-select class="international right-menu-item"/>
 
       <el-dropdown @command="handleCommand">
@@ -29,9 +29,9 @@
                       style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>设置</el-dropdown-item>
-          <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
+          <el-dropdown-item>{{ $t('dropdownMenu.personal') }}</el-dropdown-item>
+          <el-dropdown-item>{{ $t('dropdownMenu.setting') }}</el-dropdown-item>
+          <el-dropdown-item command="logout" divided>{{ $t('dropdownMenu.sign_out') }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
