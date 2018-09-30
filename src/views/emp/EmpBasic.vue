@@ -175,38 +175,15 @@
 export default {
   data () {
     return {
-      labelPosition: 'right',
+      labelPosition: 'right', // 标签对齐方式
       emps: [], // grid数据
-      // keywords: '',
-      // fileUploadBtnText: '导入数据',
-      // beginDateScope: '',
-      // faangledoubleup: 'fa-angle-double-up',
-      // faangledoubledown: 'fa-angle-double-down',
-      dialogTitle: '',
-      dialogVisible: false,
+      dialogTitle: '', // dialog标题
+      dialogVisible: false, // dialog是否可见
       multipleSelection: [], // 被勾选的数据
-      // depTextColor: '#c0c4cc',
-      // nations: [],
-      // politics: [],
-      // positions: [],
-      // joblevels: [],
       totalCount: 0, // 总数量
       currentPage: 1, // 当前页码
       pageSize: 10,
-      // degrees: [{id: 4, name: '大专'}, {id: 5, name: '本科'}, {id: 6, name: '硕士'}, {id: 7, name: '博士'}, {
-      //   id: 3,
-      //   name: '高中'
-      // }, {id: 2, name: '初中'}, {id: 1, name: '小学'}, {id: 8, name: '其他'}],
-      // deps: [],
-      // defaultProps: {
-      //   label: 'name',
-      //   isLeaf: 'leaf',
-      //   children: 'children'
-      // },
       tableLoading: false,
-      // advanceSearchViewVisible: false,
-      // showOrHidePop: false,
-      // showOrHidePop2: false,
       emp: {
         name: '',
         username: '',
@@ -217,6 +194,7 @@ export default {
         email: '',
         phone: ''
       },
+      // form表单验证规则
       rules: {
         name: [{ required: true, message: '必填:姓名', trigger: 'blur' }],
         username: [{ required: true, message: '必填:登录账号', trigger: 'blur' }],
@@ -236,9 +214,11 @@ export default {
     this.loadEmps()// 获取grid数据
   },
   methods: {
+    // 计算数据的序号
     indexMethod (index) {
       return (this.currentPage - 1) * this.pageSize + index + 1
     },
+    // 格式化性别
     formatterSex: function (row, column, cellValue, index) {
       if (cellValue === 1) {
         return '男'
@@ -247,41 +227,11 @@ export default {
         return '女'
       }
     },
-    // fileUploadSuccess (response, file, fileList) {
-    //   if (response) {
-    //     this.$message({type: response.status, message: response.msg})
-    //   }
-    //   this.loadEmps()
-    //   this.fileUploadBtnText = '导入数据'
-    // },
-    // // fileUploadError (err, file, fileList) {
-    // //   this.$message({type: 'error', message: '导入失败!'})
-    // //   this.fileUploadBtnText = '导入数据'
-    // // },
-    // beforeFileUpload (file) {
-    //   this.fileUploadBtnText = '正在导入'
-    // },
-    // exportEmps () {
-    //   window.open('/employee/basic/exportEmp', '_parent')
-    // },
-    // cancelSearch () {
-    //   this.advanceSearchViewVisible = false
-    //   this.emptyEmpData()
-    //   this.beginDateScope = ''
-    //   this.loadEmps()
-    // },
-    // showAdvanceSearchView () {
-    //   this.advanceSearchViewVisible = !this.advanceSearchViewVisible
-    //   this.keywords = ''
-    //   if (!this.advanceSearchViewVisible) {
-    //     this.emptyEmpData()
-    //     this.beginDateScope = ''
-    //     this.loadEmps()
-    //   }
-    // },
+    // checkbox勾选变化
     handleSelectionChange (val) {
       this.multipleSelection = val
     },
+    // 批量删除
     deleteManyEmps () {
       this.$confirm('此操作将删除[' + this.multipleSelection.length + ']条数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -296,6 +246,7 @@ export default {
       }).catch(() => {
       })
     },
+    // 删除单个
     deleteEmp (row) {
       this.$confirm('此操作将永久删除[' + row.name + '], 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -306,6 +257,7 @@ export default {
       }).catch(() => {
       })
     },
+    // 访问后台删除数据
     doDelete (ids) {
       this.tableLoading = true
       var _this = this
@@ -318,14 +270,6 @@ export default {
         }
       })
     },
-    // keywordsChange (val) {
-    //   if (val === '') {
-    //     this.loadEmps()
-    //   }
-    // },
-    // searchEmp () {
-    //   this.loadEmps()
-    // },
     handleSizeChange (val) {
       this.pageSize = val
       this.loadEmps()
@@ -405,24 +349,6 @@ export default {
         phone: ''
       }
     },
-    // showDepTree () {
-    //   this.showOrHidePop = !this.showOrHidePop
-    // },
-    // showDepTree2 () {
-    //   this.showOrHidePop2 = !this.showOrHidePop2
-    // },
-    // handleNodeClick (data) {
-    //   this.emp.departmentName = data.name
-    //   this.emp.departmentId = data.id
-    //   this.showOrHidePop = false
-    //   this.depTextColor = '#606266'
-    // },
-    // handleNodeClick2 (data) {
-    //   this.emp.departmentName = data.name
-    //   this.emp.departmentId = data.id
-    //   this.showOrHidePop2 = false
-    //   this.depTextColor = '#606266'
-    // },
     showEditEmpView (row) {
       this.dialogTitle = '编辑员工'
       this.emp = row

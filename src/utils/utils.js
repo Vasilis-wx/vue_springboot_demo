@@ -9,7 +9,7 @@ export const initMenu = (router, store, type, change) => {
   if (store.state.login.routes.length > 0 && change) {
     return
   }
-  getRequest('/menu.json?3333ggs13zdfs33344').then(resp => {
+  getRequest('/menu.json?' + Math.random(1)).then(resp => {
     if (resp && resp.status === 200) {
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
@@ -27,7 +27,7 @@ export const initAllMenu = (router, store) => {
   if (store.state.login.routes.length > 0) {
     return
   }
-  getRequest('/menu.json?33').then(resp => {
+  getRequest('/menu.json?' + Math.random(1)).then(resp => {
     if (resp && resp.status === 200) {
       for (let i = 0; i < resp.data.length; i++) {
         var fmtRoutes = formatRoutes(resp.data[i].routers)
