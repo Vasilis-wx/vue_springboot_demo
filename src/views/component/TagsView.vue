@@ -9,7 +9,7 @@
         :key="tag.path"
         class="tags-view-item"
         @contextmenu.prevent.native="openMenu(tag,$event)">
-        {{ tag.title }}
+        {{generateTitle(tag.meta.title)}}
         <span class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"/>
       </router-link>
     </scroll-pane>
@@ -24,6 +24,7 @@
 
 <script>
 import ScrollPane from '@/components/ScrollPane'
+import { generateTitle } from '@/utils/i18n'
 
 export default {
   components: { ScrollPane },
@@ -57,7 +58,7 @@ export default {
     this.addViewTags()
   },
   methods: {
-    // generateTitle, // generateTitle by vue-i18n
+    generateTitle, // generateTitle by vue-i18n
     generateRoute () {
       if (this.$route.name) {
         return this.$route
@@ -96,7 +97,6 @@ export default {
     },
     closeSelectedTag (view) {
       this.$store.dispatch('delView', view).then(({ visitedViews }) => {
-        debugger
         if (this.isActive(view)) {
           const latestView = visitedViews.slice(-1)[0]
           if (latestView) {

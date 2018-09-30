@@ -50,7 +50,6 @@ export const formatRoutes = (routes) => {
       path,
       component,
       name,
-      title,
       meta,
       iconCls,
       children
@@ -74,7 +73,6 @@ export const formatRoutes = (routes) => {
       name: name,
       iconCls: iconCls,
       meta: meta,
-      title: title,
       children: children
     }
     fmRoutes.push(fmRouter)

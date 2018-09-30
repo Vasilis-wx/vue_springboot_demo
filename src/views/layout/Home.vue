@@ -13,8 +13,8 @@
             <!--<breadcrumb class="breadcrumb-container"/>-->
 
             <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-top: 3px">
-              <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/home' }">{{ $t('route.mainPage') }}</el-breadcrumb-item>
+              <el-breadcrumb-item v-text="generateTitle(this.$router.currentRoute.meta.title)"></el-breadcrumb-item>
             </el-breadcrumb>
 
             <tags-view />
@@ -37,6 +37,7 @@ import SideBar from './SideBar'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import { mapGetters } from 'vuex'
+import { generateTitle } from '@/utils/i18n'
 
 export default {
   name: 'Home',
@@ -54,7 +55,10 @@ export default {
       'activeIndex'
     ])
   },
+  mounted () {
+  },
   methods: {
+    generateTitle,
     toggleSideBar () {
       this.$store.dispatch('toggleSideBar')
     }

@@ -4,14 +4,14 @@
     <template v-if="hasOneShowingChild(item.children) && !onlyOneChild.children/*&&!item.alwaysShow*/">
       <a :href="onlyOneChild.path" target="_blank" @click="clickLink(onlyOneChild.path,$event)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item v-if="onlyOneChild.meta" :icon="onlyOneChild.iconCls" :title="generateTitle(onlyOneChild.title)" />
+          <item v-if="onlyOneChild.meta" :icon="onlyOneChild.iconCls" :title="generateTitle(onlyOneChild.meta.title)" />
         </el-menu-item>
       </a>
     </template>
 
-    <el-submenu v-else :index="item.name||item.path">
+    <el-submenu v-else :index="item.path">
       <template slot="title">
-        <item :icon="item.iconCls" :title="generateTitle(item.title)" />
+        <item :icon="item.iconCls" :title="generateTitle(item.meta.title)" />
       </template>
 
       <template v-for="child in item.children">
@@ -19,7 +19,7 @@
 
         <a v-else :href="child.path" :key="child.name" target="_blank" @click="clickLink(child.path,$event)">
           <el-menu-item :index="resolvePath(child.path)">
-            <item :icon="child.iconCls" :title="generateTitle(child.title)" />
+            <item :icon="child.iconCls" :title="generateTitle(child.meta.title)" />
           </el-menu-item>
         </a>
       </template>
@@ -53,7 +53,6 @@ export default {
     }
   },
   mounted () {
-    console.info(this.item)
   },
   data () {
     return {

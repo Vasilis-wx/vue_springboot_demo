@@ -2,7 +2,7 @@ export default {
   route: {
     orderManage: 'OrderManage',
     systemManage: 'SystemManage',
-    // mainPage: '首页',
+    mainPage: 'MainPage',
     empInfo: 'EmpInfo',
     empIndex: 'EmpIndex',
     empBasic: 'EmpBasic',
