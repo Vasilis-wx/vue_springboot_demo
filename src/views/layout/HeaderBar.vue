@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;align-items: center;justify-content: space-between;height: 100%">
+  <div style="display: flex;align-items: center;justify-content: space-between;height: 100%;" >
     <div style="display: flex;align-items: center;justify-content: space-between;height: 100%">
       <div style="width: 180px">
         <span class="home_title">vue+springboot</span>
