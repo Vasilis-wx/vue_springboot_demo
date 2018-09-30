@@ -15,7 +15,7 @@
 
         <!--头部menu-->
         <template v-for="(item,index) in headMenu">
-          <el-menu-item :index="item.index+''" :key="index"> {{getRouterTitle(item.title)}}</el-menu-item>
+          <el-menu-item :index="item.index+''" :key="index"> {{generateTitle(item.title)}}</el-menu-item>
         </template>
 
       </el-menu>
@@ -62,10 +62,7 @@ export default {
   mounted: function () {
   },
   methods: {
-    getRouterTitle (title) {
-      let _this = this
-      return generateTitle(title, _this)
-    },
+    generateTitle,
     handleCommand (cmd) {
       var _this = this
       /* ***************** 注销 ************************/
