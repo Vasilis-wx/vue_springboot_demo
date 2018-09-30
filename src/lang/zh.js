@@ -165,7 +165,7 @@ export default {
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
   },
-  dropdownMenu: {
+  dropDownMenu: {
     personal: '个人中心',
     setting: '设置',
     sign_out: '注销'
