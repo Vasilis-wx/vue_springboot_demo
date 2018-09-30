@@ -11,9 +11,14 @@ export const initMenu = (router, store, type, change) => {
   }
   getRequest('/menu.json?' + Math.random(1)).then(resp => {
     if (resp && resp.status === 200) {
+      // 初始化头部menu
+      store.commit('initHeadMenu', resp.data)
+
       var headerIndex = store.state.headBar.headerIndex
       var fmtRoutes = formatRoutes(resp.data[headerIndex - 1].routers)
-      store.commit('initMenu', fmtRoutes)
+
+      // 初始化左边menu
+      store.commit('initSiderBarMenu', fmtRoutes)
       // 点击headBar时打开对应首页
       if (type === 'selectHeader') {
         router.replace({ path: fmtRoutes[0].children[0].path })
