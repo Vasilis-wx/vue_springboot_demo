@@ -1,5 +1,7 @@
 export default {
   route: {
+    orderManage: '订单管理',
+    systemManage: '系统管理',
     dashboard: '首页',
     introduction: '简述',
     documentation: '文档',
@@ -151,5 +153,10 @@ export default {
     close: '关闭',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
+  },
+  dropdownMenu: {
+    personal: '个人中心',
+    setting: '设置',
+    sign_out: '注销'
   }
 }

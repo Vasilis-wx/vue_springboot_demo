@@ -18,7 +18,7 @@ const login = {
       state.routes = []
       location.reload()
     },
-    initMenu (state, menus) {
+    initSiderBarMenu (state, menus) {
       state.routes = menus
     }
   },
