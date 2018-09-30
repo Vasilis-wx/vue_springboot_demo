@@ -36,7 +36,7 @@
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
-          <el-table :data="emps" v-loading="tableLoading" border stripe @selection-change="handleSelectionChange" size="mini" style="width: 100%" height="650px">
+          <el-table :data="emps" v-loading="tableLoading" border stripe max-height="1000px">
             <el-table-column type="selection" align="left" width="30">
             </el-table-column>
             <el-table-column type="index" :index="indexMethod" fixed align="center" label="序号" width="80">
