@@ -20,6 +20,8 @@
       <!--<el-badge style="margin-right: 30px">-->
       <!--<i class="fa fa-bell-o" style="cursor: pointer"></i>-->
       <!--</el-badge>-->
+      <lang-select class="international right-menu-item"/>
+
       <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
               {{user.name}}
@@ -38,7 +40,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import LangSelect from '@/components/LangSelect'
+
 export default {
+  components: {
+    LangSelect
+  },
   name: 'HeaderBar',
   computed: {
     ...mapGetters([
@@ -60,9 +67,7 @@ export default {
         }).then(() => {
           _this.getRequest('/login/logout')
           _this.$store.commit('logout')
-          _this.$router.replace({path: '/'})
-
-          _this.$router.options.routes = null
+          // _this.$router.replace({path: '/'})
         }).catch(() => {
           _this.$message({
             type: 'info',

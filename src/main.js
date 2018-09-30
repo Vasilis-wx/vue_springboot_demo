@@ -4,6 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import './icons' // icon
 import 'element-ui/lib/theme-chalk/index.css'
 
 import {initMenu, initAllMenu} from './utils/utils'
