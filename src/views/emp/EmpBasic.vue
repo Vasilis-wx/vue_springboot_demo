@@ -36,16 +36,16 @@
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
-          <el-table :data="emps" v-loading="tableLoading" border stripe max-height="1000px">
+          <el-table :data="emps" v-loading="tableLoading" border stripe height="650px" @sort-change="sortChange">
             <el-table-column type="selection" align="left" width="30">
             </el-table-column>
             <el-table-column type="index" :index="indexMethod" fixed align="center" label="序号" width="80">
             </el-table-column>
-            <el-table-column prop="name" fixed align="center" label="姓名" width="150">
+            <el-table-column prop="name" fixed align="center" label="姓名" width="150" sortable="custom">
             </el-table-column>
             <el-table-column prop="username" align="center" label="登录账号" width="150">
             </el-table-column>
-            <el-table-column prop="sex" label="性别" align="center" :formatter="formatterSex" width="80">
+            <el-table-column prop="sex" label="性别" align="center" :formatter="formatterSex" width="80" sortable="custom">
             </el-table-column>
             <el-table-column width="150" align="center" label="出生日期">
               <!--<template slot-scope="scope">{{formatDateTime(scope.row.birthday, 'yyyy-MM-dd HH:mm:ss')}}</template>-->
@@ -175,6 +175,9 @@
 export default {
   data () {
     return {
+      // 排序
+      prop: '',
+      order: '',
       labelPosition: 'right', // 标签对齐方式
       emps: [], // grid数据
       dialogTitle: '', // dialog标题
@@ -283,7 +286,9 @@ export default {
       this.tableLoading = true
       let params = {
         page: this.currentPage,
-        size: this.pageSize
+        size: this.pageSize,
+        order: this.order,
+        prop: this.prop
       }
       this.getRequest('/user/list', params).then(resp => {
         this.tableLoading = false
@@ -358,6 +363,11 @@ export default {
     showAddEmpView () {
       this.dialogTitle = '添加员工'
       this.dialogVisible = true
+    },
+    sortChange (sortData) {
+      this.prop = sortData.prop
+      this.order = sortData.order
+      this.loadEmps()
     }
   }
 }
