@@ -36,7 +36,7 @@
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
-          <el-table :data="emps" v-loading="tableLoading" border stripe height="650px" @sort-change="sortChange">
+          <el-table :data="emps" v-loading="tableLoading" border stripe :height="height" @sort-change="sortChange"  @selection-change="handleSelectionChange">
             <el-table-column type="selection" align="left" width="30">
             </el-table-column>
             <el-table-column type="index" :index="indexMethod" fixed align="center" label="序号" width="80">
@@ -175,6 +175,7 @@
 export default {
   data () {
     return {
+      height: '100', // grid 的高度
       // 排序
       prop: '',
       order: '',
@@ -213,8 +214,16 @@ export default {
       }
     }
   },
+  created: function () {
+    this.height = this.getWindowClientWH().height - 300
+  },
   mounted: function () {
     this.loadEmps()// 获取grid数据
+    // 浏览器大小改变时调整grid的高度
+    const that = this
+    window.onresize = function temp () {
+      that.height = that.getWindowClientWH().height - 300
+    }
   },
   methods: {
     // 计算数据的序号
