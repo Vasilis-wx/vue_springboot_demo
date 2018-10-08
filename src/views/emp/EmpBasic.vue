@@ -95,19 +95,19 @@
 
     <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;" :label-position="labelPosition" label-width="100px">
       <div style="text-align: left">
-        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="50%" v-dialogDrag>
+        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="800px" v-dialogDrag>
           <el-row>
             <el-col :span="8">
               <div>
                 <el-form-item label="姓名:" prop="name">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.name" size="mini" style="width: 150px" placeholder="请输入员工姓名"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.name" size="mini" placeholder="请输入员工姓名" resize="both"></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div>
                 <el-form-item label="登录账号:" prop="username">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.username" size="mini" style="width: 150px" placeholder="请输入员工登录账号"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.username" size="mini" resize="both" placeholder="请输入员工登录账号"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -134,14 +134,14 @@
             <el-col :span="8">
               <div>
                 <el-form-item label="地址:" prop="address">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.address" size="mini" style="width: 150px" placeholder="请输入地址"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.address" size="mini" resize="both" placeholder="请输入地址"></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div>
                 <el-form-item label="头像:" prop="userface">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" style="width: 150px" placeholder="请输入头像图片网址"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" resize="both" placeholder="请输入头像图片网址"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -150,14 +150,14 @@
             <el-col :span="8">
               <div>
                 <el-form-item label="电子邮箱:" prop="email">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.email" size="mini" style="width: 150px" placeholder="请输入电子邮箱"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.email" size="mini" resize="both" placeholder="请输入电子邮箱"></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div>
                 <el-form-item label="联系方式:" prop="phone">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.phone" size="mini" style="width: 150px" placeholder="请输入联系方式"></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.phone" size="mini" resize="both" placeholder="请输入联系方式"></el-input>
                 </el-form-item>
               </div>
             </el-col>
