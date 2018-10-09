@@ -53,7 +53,7 @@
             </el-table-column>
             <el-table-column prop="userface" label="头像" align="center" width="150">
               <template slot-scope="scope">
-                <img :src="scope.row.userface" width="60" height="60"/>
+                <img :src="getImgUrl(scope.row.userfaceUUid)" width="60" height="60"/>
               </template>
             </el-table-column>
             <el-table-column prop="email" align="center" label="邮箱" width="170">
@@ -159,10 +159,11 @@
             <el-col :span="16">
               <div>
                 <el-form-item label="头像:" prop="userface">
-                  <!--<el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" resize="both" placeholder="请输入头像图片网址"></el-input>-->
+                  <input type="hidden" v-model="emp.userfaceUUid"  />
                   <el-upload class="avatar-uploader"
-                             action="https://jsonplaceholder.typicode.com/posts/"
+                             action="api/upload/singleFile"
                              :show-file-list="false"
+                             accept="image/png, image/jpeg"
                              :on-success="handleAvatarSuccess"
                              :before-upload="beforeAvatarUpload">
                     <img v-if="emp.userface" :src="emp.userface" class="avatar">
@@ -208,6 +209,7 @@
 export default {
   data () {
     return {
+      fileList: [],
       height: '100', // grid 的高度
       // 排序
       prop: '',
@@ -227,6 +229,7 @@ export default {
         sex: '',
         birthday: '',
         userface: '',
+        userfaceUUid: '',
         address: '',
         email: '',
         phone: ''
@@ -259,12 +262,35 @@ export default {
     }
   },
   methods: {
+    getImgUrl (uuid) {
+      this.getRequest('/file/getFile', {uuid}).then(resp => {
+        this.tableLoading = false
+        if (resp && resp.status === 200) {
+          var data = resp.data
+          console.info('http://localhost:8080/api/' + data.result.url)
+          return 'http://localhost:8080/api/' + data.result.url
+        }
+      })
+    },
+    beforeAvatarUpload (file) {
+      console.log(file)
+      // const isJPG = file.type === 'image/jpeg';
+      // const isLt2M = file.size / 1024 / 1024 < 2;
+      //
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
+      // if (!isLt2M) {
+      //   this.$message.error('上传头像图片大小不能超过 2MB!');
+      // }
+      // return isJPG && isLt2M
+    },
     handleRemove (file, fileList) {
       console.log(file, fileList)
     },
     handlePreview (file) {
       console.log(file)
-      window.open(URL.createObjectURL(file.raw), '_blank')
+      // window.open(URL.createObjectURL(file.raw), '_blank')
     },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
@@ -278,6 +304,7 @@ export default {
     // 图片上传成功后调用
     handleAvatarSuccess (res, file) {
       this.emp.userface = URL.createObjectURL(file.raw)
+      this.emp.userfaceUUid = res.result
     },
     // 计算数据的序号
     indexMethod (index) {
@@ -417,6 +444,7 @@ export default {
         sex: '',
         birthday: '',
         userface: '',
+        userfaceUUid: '',
         address: '',
         email: '',
         phone: ''
