@@ -131,17 +131,10 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="16">
               <div>
                 <el-form-item label="地址:" prop="address">
                   <el-input prefix-icon="el-icon-edit" v-model="emp.address" size="mini" resize="both" placeholder="请输入地址"></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div>
-                <el-form-item label="头像:" prop="userface">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" resize="both" placeholder="请输入头像图片网址"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -154,10 +147,38 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="16">
               <div>
                 <el-form-item label="联系方式:" prop="phone">
                   <el-input prefix-icon="el-icon-edit" v-model="emp.phone" size="mini" resize="both" placeholder="请输入联系方式"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="16">
+              <div>
+                <el-form-item label="头像:" prop="userface">
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" resize="both" placeholder="请输入头像图片网址"></el-input>
+                  <!-- <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                    <img v-if="emp.userface" :src="emp.userface" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload> -->
+                  <img :src="emp.userface" style="width:45px;height:45px;"/>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <div>
+                <el-form-item label="附件上传:" prop="attachments">
+                  <el-upload class="upload-demo" :on-preview="handlePreview" :on-remove="handleRemove" action="api/upload/upload/singleFile" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed"
+                  :on-success="uploadSuccess"
+                  :file-list="fileList">
+                    <el-button size="small" type="primary">点击上传</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                  </el-upload>
                 </el-form-item>
               </div>
             </el-col>
@@ -226,6 +247,9 @@ export default {
     }
   },
   methods: {
+    uploadSuccess (response, file, fileList) {
+      console.info(response)
+    },
     // 计算数据的序号
     indexMethod (index) {
       return (this.currentPage - 1) * this.pageSize + index + 1
@@ -289,6 +313,18 @@ export default {
     currentChange (currentChange) {
       this.currentPage = currentChange
       this.loadEmps()
+    },
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview (file) {
+      console.log(file)
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove (file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
     },
     loadEmps () {
       var _this = this
