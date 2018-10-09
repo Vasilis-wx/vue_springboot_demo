@@ -95,7 +95,7 @@
 
     <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;" :label-position="labelPosition" label-width="100px">
       <div style="text-align: left">
-        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="800px" v-dialogDrag>
+        <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false" width="800px" v-dialogDrag :before-close="cancelEidt">
           <el-row>
             <el-col :span="8">
               <div>
@@ -159,12 +159,16 @@
             <el-col :span="16">
               <div>
                 <el-form-item label="头像:" prop="userface">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" resize="both" placeholder="请输入头像图片网址"></el-input>
-                  <!-- <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                  <!--<el-input prefix-icon="el-icon-edit" v-model="emp.userface" size="mini" resize="both" placeholder="请输入头像图片网址"></el-input>-->
+                  <el-upload class="avatar-uploader"
+                             action="https://jsonplaceholder.typicode.com/posts/"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
                     <img v-if="emp.userface" :src="emp.userface" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                  </el-upload> -->
-                  <img :src="emp.userface" style="width:45px;height:45px;"/>
+                  </el-upload>
+                  <!--<img :src="emp.userface" style="width:90px;height: 90px"/>-->
                 </el-form-item>
               </div>
             </el-col>
@@ -173,9 +177,17 @@
             <el-col :span="24">
               <div>
                 <el-form-item label="附件上传:" prop="attachments">
-                  <el-upload class="upload-demo" :on-preview="handlePreview" :on-remove="handleRemove" action="api/upload/upload/singleFile" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed"
-                  :on-success="uploadSuccess"
-                  :file-list="fileList">
+                  <el-upload class="upload-demo"
+                             :on-preview="handlePreview"
+                             :on-remove="handleRemove"
+                             action="api/upload/singleFile"
+                             :before-remove="beforeRemove"
+                             multiple
+                             :limit="3"
+                             :on-exceed="handleExceed"
+                             :on-success="uploadSuccess"
+                             :file-list="fileList"
+                  >
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                   </el-upload>
@@ -247,8 +259,25 @@ export default {
     }
   },
   methods: {
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview (file) {
+      console.log(file)
+      window.open(URL.createObjectURL(file.raw), '_blank')
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove (file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
     uploadSuccess (response, file, fileList) {
       console.info(response)
+    },
+    // 图片上传成功后调用
+    handleAvatarSuccess (res, file) {
+      this.emp.userface = URL.createObjectURL(file.raw)
     },
     // 计算数据的序号
     indexMethod (index) {
@@ -314,20 +343,9 @@ export default {
       this.currentPage = currentChange
       this.loadEmps()
     },
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview (file) {
-      console.log(file)
-    },
-    handleExceed (files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-    },
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
-    },
+    // 加载grid数据
     loadEmps () {
-      var _this = this
+      let _this = this
       this.tableLoading = true
       let params = {
         page: this.currentPage,
@@ -344,6 +362,7 @@ export default {
         }
       })
     },
+    // 添加
     addEmp (formName) {
       var _this = this
       this.$refs[formName].validate((valid) => {
@@ -383,10 +402,14 @@ export default {
         }
       })
     },
+    // 关闭form表单dialog是调用
     cancelEidt () {
       this.dialogVisible = false
       this.emptyEmpData()
+      // 清除验证信息
+      this.$refs['addEmpForm'].clearValidate()
     },
+    // 清空form表单内容
     emptyEmpData () {
       this.emp = {
         name: '',
@@ -399,16 +422,19 @@ export default {
         phone: ''
       }
     },
+    // 编辑员工
     showEditEmpView (row) {
       this.dialogTitle = '编辑员工'
       this.emp = row
       this.emp.birthday = this.formatDate(row.birthday)
       this.dialogVisible = true
     },
+    // 添加员工
     showAddEmpView () {
       this.dialogTitle = '添加员工'
       this.dialogVisible = true
     },
+    // 点击列头排序时调用
     sortChange (sortData) {
       this.prop = sortData.prop
       this.order = sortData.order
@@ -435,5 +461,29 @@ export default {
 .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  display: block;
 }
 </style>
