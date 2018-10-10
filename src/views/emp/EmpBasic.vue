@@ -126,7 +126,7 @@
             <el-col :span="8">
               <div>
                 <el-form-item label="出生日期:" prop="birthday">
-                  <el-date-picker v-model="emp.birthday" size="mini" value-format="yyyy-MM-dd HH:mm:ss" style="width: 150px" type="date" placeholder="出生日期">
+                  <el-date-picker v-model="emp.birthday" size="mini" value-format="yyyy-MM-dd" style="width: 150px" type="date" placeholder="出生日期">
                   </el-date-picker>
                 </el-form-item>
               </div>
@@ -159,7 +159,6 @@
             <el-col :span="16">
               <div>
                 <el-form-item label="头像:" prop="userface">
-                  <input type="hidden" v-model="emp.userfaceUUid"  />
                   <el-upload class="avatar-uploader"
                              action="api/upload/singleFile"
                              :show-file-list="false"
@@ -232,7 +231,8 @@ export default {
         userfaceUUid: '',
         address: '',
         email: '',
-        phone: ''
+        phone: '',
+        attachments: ''
       },
       // form表单验证规则
       rules: {
@@ -259,7 +259,8 @@ export default {
     this.height = this.getWindowClientWH().height - 300
   },
   mounted: function () {
-    this.loadEmps()// 获取grid数据
+    // 获取grid数据
+    this.loadEmps()
     // 浏览器大小改变时调整grid的高度
     const that = this
     window.onresize = function temp () {
@@ -267,17 +268,21 @@ export default {
     }
   },
   methods: {
+    init_fileList () {
+      this.getRequest('/file/getFile', {
+        uuids: this.emp.attachments
+      }).then(resp => {
+        this.tableLoading = false
+        if (resp && resp.status === 200) {
+          var data = resp.data
+          this.fileList = data.result
+        }
+      })
+    },
     // getImgUrl (url) {
     //   return 'api/' + url
-    //   // this.getRequest('/file/getFile', {uuid}).then(resp => {
-    //   //   this.tableLoading = false
-    //   //   if (resp && resp.status === 200) {
-    //   //     var data = resp.data
-    //   //     console.info('http://localhost:8080/api/' + data.result.url)
-    //   //     return 'http://localhost:8080/api/' + data.result.url
-    //   //   }
-    //   // })
     // },
+    // 上传附件前验证
     beforeAvatarUpload (file) {
       console.log(file)
       // const isJPG = file.type === 'image/jpeg';
@@ -292,11 +297,23 @@ export default {
       // return isJPG && isLt2M
     },
     handleRemove (file, fileList) {
-      console.log(file, fileList)
+      this.fileList = fileList
     },
     handlePreview (file) {
-      console.log(file)
-      // window.open(URL.createObjectURL(file.raw), '_blank')
+      console.info(file)
+      let uuid = ''
+      if (file.uuid) {
+        uuid = file.uuid
+      } else {
+        uuid = file.response.result.uuid
+      }
+      window.location.href = 'api/file/download?uuid=' + uuid
+      // window.open('api/file/download?uuid=' + uuid, '_blank')
+      // if (file.url) {
+      //   window.open('api/' + file.url, '_blank')
+      // } else {
+      //   window.open('api/' + file.response.result.url, '_blank')
+      // }
     },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
@@ -305,11 +322,11 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
     uploadSuccess (response, file, fileList) {
-      console.info(response)
+      console.info(fileList)
+      this.fileList = fileList
     },
     // 图片上传成功后调用
     handleAvatarSuccess (res, file) {
-      console.info(res.result.url)
       this.emp.userface = res.result.url
       this.emp.userfaceUUid = res.result.uuid
     },
@@ -396,19 +413,36 @@ export default {
         }
       })
     },
+    getAttachments (fileList) {
+      let attachment = []
+      fileList.forEach(function (value, index) {
+        // 从数据库获取的附件
+        if (value.uuid) {
+          attachment.push(value.uuid)
+        } else { // 修改时添加的附件
+          attachment.push(value.response.result.uuid)
+        }
+      })
+      return attachment.join(',')
+    },
     // 添加
     addEmp (formName) {
-      var _this = this
+      this.emp.attachments = this.getAttachments(this.fileList)
+      console.info(this.emp)
+      let _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.emp.id) {
             // 更新
             this.tableLoading = true
-            this.putRequest('/user/addUser', this.emp).then(resp => {
+            this.putRequest('/user/editUser', this.emp).then(resp => {
               _this.tableLoading = false
               if (resp && resp.status === 200) {
                 var data = resp.data
-                _this.$message({ type: data.status, message: data.msg })
+                _this.$message({
+                  type: data.status,
+                  message: data.msg
+                })
                 _this.dialogVisible = false
                 _this.emptyEmpData()
                 _this.loadEmps()
@@ -442,6 +476,7 @@ export default {
       this.emptyEmpData()
       // 清除验证信息
       this.$refs['addEmpForm'].clearValidate()
+      this.fileList = []
     },
     // 清空form表单内容
     emptyEmpData () {
@@ -454,7 +489,8 @@ export default {
         userfaceUUid: '',
         address: '',
         email: '',
-        phone: ''
+        phone: '',
+        attachments: ''
       }
     },
     // 编辑员工
@@ -462,6 +498,8 @@ export default {
       this.dialogTitle = '编辑员工'
       this.emp = row
       this.emp.birthday = this.formatDate(row.birthday)
+      // 初始化附件数据
+      this.init_fileList()
       this.dialogVisible = true
     },
     // 添加员工
