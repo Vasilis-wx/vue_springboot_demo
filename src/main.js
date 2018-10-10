@@ -7,7 +7,7 @@ import ElementUI from 'element-ui'
 import './icons' // icon
 import 'element-ui/lib/theme-chalk/index.css'
 
-import {initMenu, initAllMenu, getWindowClientWH} from './utils/utils'
+import {initMenu, initAllMenu, getWindowClientWH, getImgUrl} from './utils/utils'
 import './utils/filter_utils'
 
 import i18n from './lang' // Internationalization
@@ -37,6 +37,7 @@ Vue.prototype.deleteRequest = deleteRequest
 Vue.prototype.putRequest = putRequest
 
 Vue.prototype.getWindowClientWH = getWindowClientWH
+Vue.prototype.getImgUrl = getImgUrl
 
 /* 登录前拦截 **/
 router.beforeEach((to, from, next) => {

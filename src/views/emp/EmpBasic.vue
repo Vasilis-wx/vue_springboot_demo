@@ -53,7 +53,7 @@
             </el-table-column>
             <el-table-column prop="userface" label="头像" align="center" width="150">
               <template slot-scope="scope">
-                <img :src="getImgUrl(scope.row.userfaceUUid)" width="60" height="60"/>
+                <img :src="getImgUrl(scope.row.userface)" width="60" height="60" />
               </template>
             </el-table-column>
             <el-table-column prop="email" align="center" label="邮箱" width="170">
@@ -166,7 +166,7 @@
                              accept="image/png, image/jpeg"
                              :on-success="handleAvatarSuccess"
                              :before-upload="beforeAvatarUpload">
-                    <img v-if="emp.userface" :src="emp.userface" class="avatar">
+                    <img v-if="emp.userface" :src="imgUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                   <!--<img :src="emp.userface" style="width:90px;height: 90px"/>-->
@@ -250,6 +250,11 @@ export default {
       }
     }
   },
+  computed: {
+    imgUrl () {
+      return 'api/' + this.emp.userface
+    }
+  },
   created: function () {
     this.height = this.getWindowClientWH().height - 300
   },
@@ -262,16 +267,17 @@ export default {
     }
   },
   methods: {
-    getImgUrl (uuid) {
-      this.getRequest('/file/getFile', {uuid}).then(resp => {
-        this.tableLoading = false
-        if (resp && resp.status === 200) {
-          var data = resp.data
-          console.info('http://localhost:8080/api/' + data.result.url)
-          return 'http://localhost:8080/api/' + data.result.url
-        }
-      })
-    },
+    // getImgUrl (url) {
+    //   return 'api/' + url
+    //   // this.getRequest('/file/getFile', {uuid}).then(resp => {
+    //   //   this.tableLoading = false
+    //   //   if (resp && resp.status === 200) {
+    //   //     var data = resp.data
+    //   //     console.info('http://localhost:8080/api/' + data.result.url)
+    //   //     return 'http://localhost:8080/api/' + data.result.url
+    //   //   }
+    //   // })
+    // },
     beforeAvatarUpload (file) {
       console.log(file)
       // const isJPG = file.type === 'image/jpeg';
@@ -303,8 +309,9 @@ export default {
     },
     // 图片上传成功后调用
     handleAvatarSuccess (res, file) {
-      this.emp.userface = URL.createObjectURL(file.raw)
-      this.emp.userfaceUUid = res.result
+      console.info(res.result.url)
+      this.emp.userface = res.result.url
+      this.emp.userfaceUUid = res.result.uuid
     },
     // 计算数据的序号
     indexMethod (index) {

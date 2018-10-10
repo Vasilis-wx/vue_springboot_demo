@@ -28,7 +28,7 @@
       <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
               {{user.name}}
-              <i><img v-if="user.userface!==''" :src="user.userface"
+              <i><img v-if="user.userface!==''" :src="getImgUrl(user.userface)"
                       style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
         <!--下拉菜单-->

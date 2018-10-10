@@ -105,3 +105,7 @@ export const getWindowClientWH = () => {
     height: winHeight
   }
 }
+
+export const getImgUrl = (url) => {
+  return 'api/' + url
+}
