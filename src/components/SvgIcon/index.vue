@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 .myIcon {
-  width: 1.5em;
+  width: 1.4em;
   height: 1.5em;
   margin-right: 0.7em;
   fill: currentColor;

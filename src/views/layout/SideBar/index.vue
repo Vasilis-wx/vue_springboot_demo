@@ -30,7 +30,7 @@ export default {
     SideBarItem
   },
   mounted () {
-    // console.info(this.routes)
+    console.info(this.routes)
   },
   computed: {
     ...mapGetters([

@@ -68,6 +68,8 @@ export const formatRoutes = (routes) => {
           require(['../views/salary/' + component + '.vue'], resolve)
         } else if (component.startsWith('Sys')) {
           require(['../views/system/' + component + '.vue'], resolve)
+        } else if (component.startsWith('Dash')) {
+          require(['../views/dashboard/' + component + '.vue'], resolve)
         }
       },
       name: name,

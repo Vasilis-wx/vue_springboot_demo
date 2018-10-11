@@ -11,6 +11,7 @@ const tagsView = {
           title: view.name || 'no-name'
         })
       )
+      // state.visitedViews[0].path = '/dashboard'
     },
     ADD_CACHED_VIEW: (state, view) => {
       if (state.cachedViews.includes(view.name)) return

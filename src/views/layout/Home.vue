@@ -13,7 +13,7 @@
             <!--<breadcrumb class="breadcrumb-container"/>-->
 
             <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-top: 3px">
-              <el-breadcrumb-item :to="{ path: '/home' }">{{ $t('route.mainPage') }}</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/dashboard' }">{{ $t('route.mainPage') }}</el-breadcrumb-item>
               <el-breadcrumb-item v-text="generateTitle(this.$router.currentRoute.meta.title)"></el-breadcrumb-item>
             </el-breadcrumb>
 
