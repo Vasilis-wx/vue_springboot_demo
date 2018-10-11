@@ -19,16 +19,6 @@
           <!--</el-button>-->
         </div>
         <div style="margin-left: 5px;margin-right: 20px;display: inline">
-          <!--<el-upload-->
-          <!--:show-file-list="false"-->
-          <!--accept="application/vnd.ms-excel"-->
-          <!--action="/employee/basic/importEmp"-->
-          <!--style="display: inline">-->
-          <!--<el-button size="mini" type="success" ><i class="fa fa-lg fa-level-up" style="margin-right: 5px"></i>导入数据-->
-          <!--</el-button>-->
-          <!--</el-upload>-->
-          <!--<el-button type="success" size="mini" ><i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据-->
-          <!--</el-button>-->
           <el-button type="primary" size="mini" icon="el-icon-plus" style="" @click="showAddEmpView">
             添加员工
           </el-button>
@@ -39,9 +29,9 @@
           <el-table :data="emps" v-loading="tableLoading" border stripe :height="height" @sort-change="sortChange"  @selection-change="handleSelectionChange">
             <el-table-column type="selection" align="left" width="30">
             </el-table-column>
-            <el-table-column type="index" :index="indexMethod" fixed align="center" label="序号" width="80">
+            <el-table-column type="index" :index="indexMethod"  align="center" label="序号" width="80">
             </el-table-column>
-            <el-table-column prop="name" fixed align="center" label="姓名" width="150" sortable="custom">
+            <el-table-column prop="name"  align="center" label="姓名" width="150" sortable="custom">
             </el-table-column>
             <el-table-column prop="username" align="center" label="登录账号" width="150">
             </el-table-column>
@@ -71,7 +61,7 @@
                 <p v-else>{{ scope.row.address }}</p>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" align="center" width="195">
+            <el-table-column  label="操作" align="center" width="195">
               <template slot-scope="scope">
                 <!--<el-button style="padding: 3px 4px 3px 4px;margin: 2px"-->
                 <!--size="medium">编辑-->
@@ -86,7 +76,7 @@
           <div style="display: flex;justify-content: space-between;margin: 2px">
             <el-button type="danger" size="mini" v-if="emps.length>0" :disabled="multipleSelection.length === 0" @click="deleteManyEmps">批量删除
             </el-button>
-            <el-pagination @size-change="handleSizeChange" @current-change="currentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+            <el-pagination @size-change="handleSizeChange" @current-change="currentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100,500,1000,2000]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
             </el-pagination>
           </div>
         </div>
@@ -175,7 +165,6 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <div>
                 <el-form-item label="附件上传:" prop="attachments">
                   <el-upload class="upload-demo"
                              :on-preview="handlePreview"
@@ -189,10 +178,9 @@
                              :file-list="fileList"
                   >
                     <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                    <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
                   </el-upload>
                 </el-form-item>
-              </div>
             </el-col>
           </el-row>
           <span slot="footer" class="dialog-footer">

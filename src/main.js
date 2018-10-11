@@ -4,11 +4,13 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import './icons' // icon
+import './components/SvgIcon/index.js' // icon
 import 'element-ui/lib/theme-chalk/index.css'
 
 import {initMenu, initAllMenu, getWindowClientWH, getImgUrl} from './utils/utils'
 import './utils/filter_utils'
+
+import '@/components/dynamic-form'
 
 import i18n from './lang' // Internationalization
 
