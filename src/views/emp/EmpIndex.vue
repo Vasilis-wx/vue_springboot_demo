@@ -119,29 +119,14 @@ export default {
       // 排序
       prop: '',
       order: '',
-      labelPosition: 'right', // 标签对齐方式
       emps: [], // grid数据
       dialogTitle: '添加员工', // dialog标题
-      dialogVisible: true, // dialog是否可见
+      dialogVisible: false, // dialog是否可见
       multipleSelection: [], // 被勾选的数据
       totalCount: 0, // 总数量
       currentPage: 1, // 当前页码
       pageSize: 10,
-      tableLoading: false,
-      // form表单验证规则
-      rules: {
-        name: [{ required: true, message: '必填:姓名', trigger: 'blur' }],
-        username: [{ required: true, message: '必填:登录账号', trigger: 'blur' }],
-        sex: [{ required: true, message: '必填:性别', trigger: 'blur' }],
-        birthday: [{ required: true, message: '必填:出生日期', trigger: 'blur' }],
-        email: [{ required: true, message: '必填:电子邮箱', trigger: 'blur' }, {
-          type: 'email',
-          message: '邮箱格式不正确',
-          trigger: 'blur'
-        }],
-        phone: [{ required: true, message: '必填:联系方式', trigger: 'blur' }],
-        address: [{ required: true, message: '必填:联系地址', trigger: 'blur' }]
-      }
+      tableLoading: false
     }
   },
   computed: {
@@ -319,7 +304,7 @@ export default {
     },
     // 添加
     addEmp (formName) {
-      this.emp.attachments = this.getAttachments(this.fileList)
+      // this.emp.attachments = this.getAttachments(this.fileList)
       let _this = this
       this.$refs['dynamic-form'].$refs[formName].validate((valid) => {
         if (valid) {
@@ -356,6 +341,7 @@ export default {
               }
             })
           }
+          this.$refs['dynamic-form'].$refs[this.form.ref].clearValidate()
         } else {
           return false
         }
@@ -366,7 +352,7 @@ export default {
       this.dialogVisible = false
       this.emptyEmpData()
       // 清除验证信息
-      this.$refs['addEmpForm'].clearValidate()
+      this.$refs['dynamic-form'].$refs[this.form.ref].clearValidate()
       this.fileList = []
     },
     // 清空form表单内容

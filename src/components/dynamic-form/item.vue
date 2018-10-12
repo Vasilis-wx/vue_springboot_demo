@@ -99,13 +99,19 @@ export default {
   },
   data () {
     return {
-      ajaxOptions: [],
-      thisValue: ''
+      ajaxOptions: []
     }
   },
   computed: {
     imgUrl () {
       return 'api/' + this.thisValue
+    },
+    thisValue: {
+      get () {
+        return this.$attrs.value
+      },
+      set (newValue) {
+      }
     }
   },
   created () {
@@ -125,10 +131,7 @@ export default {
     // }
   },
   mounted () {
-    // this.$attrs.value = this.value
-    this.thisValue = this.value
-
-    // console.info(this.value)
+    // console.info(this.$attrs)
   },
   methods: {
     // 图片上传成功后调用
