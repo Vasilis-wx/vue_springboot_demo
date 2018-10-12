@@ -6,7 +6,7 @@
 </style>
 
 <template>
-  <el-form-item :rules="Rules" :label="item.label" :prop="item.key" :class="{'block':item.block}">
+  <el-form-item  :label="item.label" :prop="item.key" :class="{'block':item.block}">
 
     <el-input v-if="item.type==='input'" v-bind="$attrs" v-on="$listeners" :type="item.subtype"
               :placeholder="item.placeholder" :disabled="item.disable" :readonly="item.readonly"
@@ -106,41 +106,6 @@ export default {
   computed: {
     imgUrl () {
       return 'api/' + this.thisValue
-    },
-    Rules () {
-      const rules = this.item.rules
-      if (rules === undefined) {
-        return undefined
-      }
-
-      const R = []
-
-      rules.forEach(rule => {
-        if (rule.sql) {
-          const validator = (rule2, value, callback) => {
-            // this.getRequest('/api/validate', 'POST', {
-            //   key: rule2.field,
-            //   value,
-            //   sql: rule.sql.replace(/{key}/ig, rule2.field)
-            // })
-            //   .then(res => {
-            //     // eslint-disable-next-line
-            //     callback(!res || undefined)
-            //   })
-            //   .catch(err => {
-            //     this.$message.error(err.message)
-            //     // eslint-disable-next-line
-            //     callback(false)
-            //   })
-          }
-
-          R.push({validator, message: rule.message, trigger: 'blur'})
-        } else {
-          R.push(rule)
-        }
-      })
-
-      return R
     }
   },
   created () {

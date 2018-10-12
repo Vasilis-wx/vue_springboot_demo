@@ -3,7 +3,21 @@ export default {
   'labelPosition': 'right',
   'labelWidth': '80px',
   'size': 'small',
+  'ref': 'addEmpForm',
   'statusIcon': true,
+  'rules': {
+    name: [{required: true, message: '必填:姓名', trigger: 'blur'}],
+    username: [{required: true, message: '必填:登录账号', trigger: 'blur'}],
+    sex: [{required: true, message: '必填:性别', trigger: 'blur'}],
+    birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
+    email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
+      type: 'email',
+      message: '邮箱格式不正确',
+      trigger: 'blur'
+    }],
+    phone: [{required: true, message: '必填:联系方式', trigger: 'blur'}],
+    address: [{required: true, message: '必填:联系地址', trigger: 'blur'}]
+  },
   'rows': [
     {
       'index': 0,
@@ -106,13 +120,7 @@ export default {
           ],
           'key': 'address',
           'subtype': 'text'
-        }
-
-      ]
-    },
-    {
-      'index': 3,
-      'formItemList': [
+        },
         {
           'type': 'input',
           'label': '电子邮箱',
@@ -129,7 +137,13 @@ export default {
           ],
           'key': 'email',
           'subtype': 'text'
-        },
+        }
+
+      ]
+    },
+    {
+      'index': 3,
+      'formItemList': [
         {
           'type': 'input',
           'label': '联系方式',

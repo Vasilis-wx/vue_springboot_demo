@@ -416,7 +416,7 @@ export default {
     // 添加
     addEmp (formName) {
       this.emp.attachments = this.getAttachments(this.fileList)
-      console.info(this.emp)
+      console.info(this.$refs[formName])
       let _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {

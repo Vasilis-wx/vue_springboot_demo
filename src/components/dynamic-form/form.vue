@@ -1,6 +1,14 @@
 <template>
-  <el-form class="dynamic-form" :inline="formConfig.inline" :model="value" :label-position="formConfig.labelPosition"
-           :label-width="formConfig.labelWidth" :size='formConfig.size' :status-icon="formConfig.statusIcon">
+  <el-form class="dynamic-form"
+           :inline="formConfig.inline"
+           :rules="formConfig.rules"
+           :model="value"
+           :label-position="formConfig.labelPosition"
+           :label-width="formConfig.labelWidth"
+           :size='formConfig.size'
+           :status-icon="formConfig.statusIcon"
+           :ref="formConfig.ref"
+  >
 
     <el-row v-for="row in formConfig.rows" :key="row.index">
       <dynamic-form-item

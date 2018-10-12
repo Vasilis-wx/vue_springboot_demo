@@ -86,11 +86,11 @@
     <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false"
                width="50%" v-dialogDrag :before-close="cancelEidt">
 
-      <dynamic-form :form-config="form" v-model="emp" ref="addEmpForm" ></dynamic-form>
+      <dynamic-form :form-config="form" v-model="emp" ref="dynamic-form" ></dynamic-form>
 
       <span slot="footer" class="dialog-footer">
         <el-button size="mini" @click="cancelEidt">取 消</el-button>
-        <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+        <el-button size="mini" type="primary" @click="addEmp(form.ref)">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -103,7 +103,7 @@ export default {
     return {
       form,
       emp: {
-        name: '333',
+        name: '',
         username: '',
         sex: '',
         birthday: '',
@@ -321,7 +321,7 @@ export default {
     addEmp (formName) {
       this.emp.attachments = this.getAttachments(this.fileList)
       let _this = this
-      this.$refs[formName].validate((valid) => {
+      this.$refs['dynamic-form'].$refs[formName].validate((valid) => {
         if (valid) {
           if (this.emp.id) {
             // 更新
