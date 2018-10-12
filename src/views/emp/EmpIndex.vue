@@ -85,7 +85,9 @@
 
     <el-dialog :title="dialogTitle" style="padding: 0px;" :visible.sync="dialogVisible" :close-on-click-modal="false"
                width="50%" v-dialogDrag :before-close="cancelEidt">
-      <dynamic-form :form-config="form" v-model="hehe" ref="addEmpForm"></dynamic-form>
+
+      <dynamic-form :form-config="form" v-model="emp" ref="addEmpForm" ></dynamic-form>
+
       <span slot="footer" class="dialog-footer">
         <el-button size="mini" @click="cancelEidt">取 消</el-button>
         <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
@@ -100,16 +102,16 @@ export default {
   data () {
     return {
       form,
-      hehe: {
-        name: '',
+      emp: {
+        name: '333',
         username: '',
         sex: '',
         birthday: '',
+        userface: '',
+        userfaceUUid: '',
         address: '',
         email: '',
         phone: '',
-        userface: '',
-        userfaceUUid: '',
         attachments: ''
       },
       fileList: [],
@@ -126,18 +128,6 @@ export default {
       currentPage: 1, // 当前页码
       pageSize: 10,
       tableLoading: false,
-      emp: {
-        name: '',
-        username: '',
-        sex: '',
-        birthday: '',
-        userface: '',
-        userfaceUUid: '',
-        address: '',
-        email: '',
-        phone: '',
-        attachments: ''
-      },
       // form表单验证规则
       rules: {
         name: [{ required: true, message: '必填:姓名', trigger: 'blur' }],
@@ -204,7 +194,6 @@ export default {
       this.fileList = fileList
     },
     handlePreview (file) {
-      console.info(file)
       let uuid = ''
       if (file.uuid) {
         uuid = file.uuid
@@ -226,7 +215,6 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
     uploadSuccess (response, file, fileList) {
-      console.info(fileList)
       this.fileList = fileList
     },
     // 图片上传成功后调用
@@ -332,7 +320,6 @@ export default {
     // 添加
     addEmp (formName) {
       this.emp.attachments = this.getAttachments(this.fileList)
-      console.info(this.emp)
       let _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {

@@ -9,6 +9,7 @@
         :item="item"
         :value="value[item.key]"
         @input="handleInput($event, item.key)"
+        @changeImage="changeImage($event, item.key)"
         :style="{'min-width':columnMinWidth}"></dynamic-form-item>
     </el-row>
 
@@ -37,13 +38,16 @@ export default {
       // 这里element-ui没有上报event，直接就是value了
       this.$emit('input', {...this.value, [key]: val})
     },
+    changeImage (val, key) {
+      // 这里element-ui没有上报event，直接就是value了
+      this.$emit('input', {...this.value, [key]: val})
+    },
     setDefaultValue () {
       const formData = {...this.value}
       this.$emit('input', {...formData})
     }
   },
   mounted () {
-    console.info(this.formConfig.rows)
     this.setDefaultValue()
   }
 }
