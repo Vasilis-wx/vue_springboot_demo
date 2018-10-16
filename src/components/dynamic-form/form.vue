@@ -11,14 +11,15 @@
   >
 
     <el-row v-for="row in formConfig.rows" :key="row.index">
-      <dynamic-form-item
-        v-for="item in row.formItemList"
-        :key="item.key"
-        :item="item"
-        :value="value[item.key]"
-        @input="handleInput($event, item.key)"
-        @changeImage="changeImage($event, item.key)"
-        :style="{'min-width':columnMinWidth}"></dynamic-form-item>
+        <dynamic-form-item
+          v-for="item in row.formItemList"
+          :key="item.key"
+          :item="item"
+          :value="value[item.key]"
+          @input="handleInput($event, item.key)"
+          @changeImage="changeImage($event, item.key)"
+          :style="{'min-width':columnMinWidth}"
+        ></dynamic-form-item>
     </el-row>
 
     <slot/>

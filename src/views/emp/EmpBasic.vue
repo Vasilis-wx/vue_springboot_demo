@@ -263,7 +263,9 @@ export default {
         this.tableLoading = false
         if (resp && resp.status === 200) {
           var data = resp.data
-          this.fileList = data.result
+          if (data.result) {
+            this.fileList = data.result
+          }
         }
       })
     },
@@ -272,7 +274,7 @@ export default {
     // },
     // 上传附件前验证
     beforeAvatarUpload (file) {
-      console.log(file)
+      // console.log(file)
       // const isJPG = file.type === 'image/jpeg';
       // const isLt2M = file.size / 1024 / 1024 < 2;
       //
@@ -288,7 +290,6 @@ export default {
       this.fileList = fileList
     },
     handlePreview (file) {
-      console.info(file)
       let uuid = ''
       if (file.uuid) {
         uuid = file.uuid
@@ -416,7 +417,6 @@ export default {
     // 添加
     addEmp (formName) {
       this.emp.attachments = this.getAttachments(this.fileList)
-      console.info(this.$refs[formName])
       let _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
