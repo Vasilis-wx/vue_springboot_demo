@@ -290,7 +290,6 @@ export default {
       this.fileList = fileList
     },
     handlePreview (file) {
-      console.info(file)
       let uuid = ''
       if (file.uuid) {
         uuid = file.uuid

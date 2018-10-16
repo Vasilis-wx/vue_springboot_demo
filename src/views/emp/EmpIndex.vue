@@ -114,7 +114,6 @@ export default {
         phone: '',
         attachments: ''
       },
-      fileList: [],
       height: '100', // grid 的高度
       // 排序
       prop: '',
@@ -147,6 +146,7 @@ export default {
     }
   },
   methods: {
+    // 初始化附件
     init_fileList () {
       this.getRequest('/file/getFile', {
         uuids: this.emp.attachments
@@ -154,58 +154,9 @@ export default {
         this.tableLoading = false
         if (resp && resp.status === 200) {
           var data = resp.data
-          this.fileList = data.result
+          this.form.rows[4].formItemList[0].fileList = data.result
         }
       })
-    },
-    // getImgUrl (url) {
-    //   return 'api/' + url
-    // },
-    // 上传附件前验证
-    beforeAvatarUpload (file) {
-      console.log(file)
-      // const isJPG = file.type === 'image/jpeg';
-      // const isLt2M = file.size / 1024 / 1024 < 2;
-      //
-      // if (!isJPG) {
-      //   this.$message.error('上传头像图片只能是 JPG 格式!');
-      // }
-      // if (!isLt2M) {
-      //   this.$message.error('上传头像图片大小不能超过 2MB!');
-      // }
-      // return isJPG && isLt2M
-    },
-    handleRemove (file, fileList) {
-      this.fileList = fileList
-    },
-    handlePreview (file) {
-      let uuid = ''
-      if (file.uuid) {
-        uuid = file.uuid
-      } else {
-        uuid = file.response.result.uuid
-      }
-      window.location.href = 'api/file/download?uuid=' + uuid
-      // window.open('api/file/download?uuid=' + uuid, '_blank')
-      // if (file.url) {
-      //   window.open('api/' + file.url, '_blank')
-      // } else {
-      //   window.open('api/' + file.response.result.url, '_blank')
-      // }
-    },
-    handleExceed (files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-    },
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
-    },
-    uploadSuccess (response, file, fileList) {
-      this.fileList = fileList
-    },
-    // 图片上传成功后调用
-    handleAvatarSuccess (res, file) {
-      this.emp.userface = res.result.url
-      this.emp.userfaceUUid = res.result.uuid
     },
     // 计算数据的序号
     indexMethod (index) {
@@ -263,10 +214,12 @@ export default {
         }
       })
     },
+    // 更改grid每页条数
     handleSizeChange (val) {
       this.pageSize = val
       this.loadEmps()
     },
+    // grid页面变化
     currentChange (currentChange) {
       this.currentPage = currentChange
       this.loadEmps()
@@ -290,21 +243,8 @@ export default {
         }
       })
     },
-    getAttachments (fileList) {
-      let attachment = []
-      fileList.forEach(function (value, index) {
-        // 从数据库获取的附件
-        if (value.uuid) {
-          attachment.push(value.uuid)
-        } else { // 修改时添加的附件
-          attachment.push(value.response.result.uuid)
-        }
-      })
-      return attachment.join(',')
-    },
     // 添加
     addEmp (formName) {
-      // this.emp.attachments = this.getAttachments(this.fileList)
       let _this = this
       this.$refs['dynamic-form'].$refs[formName].validate((valid) => {
         if (valid) {
@@ -353,7 +293,8 @@ export default {
       this.emptyEmpData()
       // 清除验证信息
       this.$refs['dynamic-form'].$refs[this.form.ref].clearValidate()
-      this.fileList = []
+      // 清除附件信息
+      this.form.rows[4].formItemList[0].fileList = []
     },
     // 清空form表单内容
     emptyEmpData () {
@@ -376,7 +317,9 @@ export default {
       this.emp = row
       this.emp.birthday = this.formatDate(row.birthday)
       // 初始化附件数据
-      this.init_fileList()
+      if (this.emp.attachments) {
+        this.init_fileList()
+      }
       this.dialogVisible = true
     },
     // 添加员工

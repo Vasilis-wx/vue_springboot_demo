@@ -86,7 +86,7 @@ export default {
       ]
     },
     {
-      'index': 2,
+      'index': 1,
       'formItemList': [
         {
           'type': 'date',
@@ -142,7 +142,7 @@ export default {
       ]
     },
     {
-      'index': 3,
+      'index': 2,
       'formItemList': [
         {
           'type': 'input',
@@ -165,7 +165,7 @@ export default {
       ]
     },
     {
-      'index': 4,
+      'index': 3,
       'formItemList': [
         {
           'type': 'image',
@@ -175,6 +175,20 @@ export default {
           'show_file_list': false,
           'accept': 'image/png, image/jpeg',
           'key': 'userface'
+        }
+      ]
+    },
+    {
+      'index': 4,
+      'formItemList': [
+        {
+          'type': 'attachment',
+          'label': '附件',
+          'value': '',
+          'limit': 4,
+          'fileList': [],
+          'action': 'api/upload/singleFile',
+          'key': 'attachments'
         }
       ]
     }]

@@ -65,13 +65,29 @@
     <!--<richtext v-else-if="item.type==='richtext'" v-bind="$attrs" v-on="$listeners"></richtext>-->
 
     <el-upload v-else-if="item.type==='image'" class="avatar-uploader"
-    :action="item.action"
-    :show-file-list="item.show_file_list"
-    :accept="item.accept"
-    :on-success="handleAvatarSuccess"
+      :action="item.action"
+      :show-file-list="item.show_file_list"
+      :accept="item.accept"
+      :on-success="handleAvatarSuccess"
     >
-      <img v-if="thisValue" :src="imgUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <img v-if="thisValue" :src="imgUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+
+    <el-upload
+               v-else-if="item.type==='attachment'"
+               :on-preview="handlePreview"
+               :on-remove="handleRemove"
+               action="api/upload/singleFile"
+               :before-remove="beforeRemove"
+               multiple
+               :limit="item.limit"
+               :on-exceed="handleExceed"
+               :on-success="uploadSuccess"
+               :file-list="item.fileList"
+    >
+      <el-button size="small" type="primary">点击上传</el-button>
+      <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
     </el-upload>
 
     <span v-else>未知控件类型</span>
@@ -131,7 +147,7 @@ export default {
     // }
   },
   mounted () {
-    // console.info(this.$attrs)
+    // console.info(this.item)
   },
   methods: {
     // 图片上传成功后调用
@@ -139,6 +155,41 @@ export default {
       this.thisValue = res.result.url
       this.$emit('changeImage', res.result.url)
       // this.emp.userfaceUUid = res.result.uuid
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 ${this.item.limit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove (file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
+    handleRemove (file, fileList) {
+      this.item.fileList = fileList
+    },
+    uploadSuccess (response, file, fileList) {
+      this.item.fileList = fileList
+      let attachments = this.getAttachments(this.item.fileList)
+      this.$emit('changeImage', attachments)
+    },
+    getAttachments (fileList) {
+      let attachment = []
+      fileList.forEach(function (value, index) {
+        // 从数据库获取的附件
+        if (value.uuid) {
+          attachment.push(value.uuid)
+        } else { // 修改时添加的附件
+          attachment.push(value.response.result.uuid)
+        }
+      })
+      return attachment.join(',')
+    },
+    handlePreview (file) {
+      let uuid = ''
+      if (file.uuid) {
+        uuid = file.uuid
+      } else {
+        uuid = file.response.result.uuid
+      }
+      window.location.href = 'api/file/download?uuid=' + uuid
     }
   }
 }
